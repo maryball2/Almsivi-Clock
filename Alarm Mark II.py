@@ -73,14 +73,12 @@ def alarmsystem(Hours2, Minutes2):
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
     Seconds = int(Currenttime[17:19])
+    soundisplaying = False
     if timeofday == "Bedtime" and (os.path.exists(dir_path +"/Backgroundsounds")) == True:
         soundisplaying = True
         playsound(random.choice(background))
     elif soundsorno == "Y" or soundsorno == "Yes" or soundsorno == "y" or soundsorno == "yes" and (os.path.exists(dir_path + "/Backgroundsounds")) == True:
         playsound(random.choice(background))
-    elif (os.path.exists(dir_path + "/Silence" == True)) and timeofday != "Bedtime" and timeofday != "Night":
-        soundisplaying = True
-        playsound(random.choice(Silence))
     while Hours1 != Hours2 or Minutes1 != Minutes2:
         if secondtime == True:
             print(fiveminutecountdown)
