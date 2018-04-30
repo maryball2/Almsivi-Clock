@@ -16,6 +16,10 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 optionalsongs = (glob.glob(dir_path + "/Songs/*.wav"))
 background = (glob.glob(dir_path + "/Backgroundsounds/*.wav"))
 Silence = (glob.glob(dir_path + "/Silence/*.wav"))
+if (os.path.exists(dir_path +"/Backgroundsounds")) == False:
+    os.makedirs(dir_path + "/Backgroundsounds")
+if (os.path.exists(dir_path +"/Songs")) == False:
+    os.makedirs(dir_path + "/Songs")
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #VOLUME CONTROL AREA
 
