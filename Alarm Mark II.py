@@ -1,5 +1,5 @@
 '''
-Title: This is an alarm that goes off every 5 minutes
+Title: This is an alarm that perfectly lines up with my sleep schedule
 Author: Riley Carpenter
 TODO: have the volume get louder when it goes off and quieter afterwards, Make it so that the songs are in a folder and it just scans that folder
 '''
@@ -22,6 +22,7 @@ Currenttime = time.ctime()
 Hours1 = int(Currenttime[11:13])
 Minutes1 = int(Currenttime[14:16])
 Seconds = int(Currenttime[17:19])
+fiveminutecountdown = 300
 startinghour = int(Currenttime[11:13])
 if startinghour >= 22 or startinghour <= 4:
     timeofday = "Bedtime"
@@ -50,10 +51,17 @@ elif timeofday == "Night":
 optionalsongs = ["Pink Floyd Time.wav","Alarm2.wav","Alarm3.wav","Alarm4.wav","Alarm5.wav","Alarm6.wav","Alarm7.wav","Alarm8.wav","Alarm9.wav","Alarm10.wav","Alarm11.wav"]
 if timeofday == "Night":
     soundsorno = input("Hey I saw that this is Night so I wanted to know if you want to play the city sounds? Y/N ")
+else:
+    soundsorno = ""
 def playsound(soundfile):
     mixer.init()
     mixer.music.load(soundfile)
     mixer.music.play(-1)
+def gettime():
+    Currenttime = time.ctime()
+    Hours1 = int(Currenttime[11:13])
+    Minutes1 = int(Currenttime[14:16])
+    Seconds = int(Currenttime[17:19])
 def alarmsystem(Hours2, Minutes2):
     Currenttime = time.ctime()
     Hours1 = int(Currenttime[11:13])
@@ -66,6 +74,9 @@ def alarmsystem(Hours2, Minutes2):
     else:
         playsound("soundthatneedstoplayatthebeginningforaveryspecificreasonthatidontknow-49490711.wav")
     while Hours1 != Hours2 or Minutes1 != Minutes2:
+        if secondtime == True:
+            print(fiveminutecountdown)
+            fiveminutecountdown -= 1
         Currenttime = time.ctime()
         Hours1 = int(Currenttime[11:13])
         Minutes1 = int(Currenttime[14:16])
@@ -96,6 +107,8 @@ def alarmsystem(Hours2, Minutes2):
             time.sleep(1)
             sys.exit()
 def nexttime():
+    secondtime = True
+    fiveminutecountdown = 300
     Currenttime = time.ctime()
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
@@ -151,6 +164,7 @@ def nexttime():
                 alarmsystem(Hours3,Minutes3)
 firsthour = int(input("What hour do you want this to start going off? "))
 firstminute = int(input("What minute do you want this to start going off? "))
+secondtime = False
 alarmsystem(firsthour,firstminute)
 while 1 == 1:
     nexttime()
