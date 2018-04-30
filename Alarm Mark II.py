@@ -14,6 +14,8 @@ import glob
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
 optionalsongs = (glob.glob(dir_path + "/Songs/*.wav"))
+background = (glob.glob(dir_path + "/Backgroundsounds/*.wav"))
+Silence = (glob.glob(dir_path + "/Silence/*.wav"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #VOLUME CONTROL AREA
 
@@ -73,9 +75,9 @@ def alarmsystem(Hours2, Minutes2):
     if timeofday == "Bedtime":
         playsound("Citys Night ambience sounds.wav")
     elif soundsorno == "Y" or soundsorno == "Yes" or soundsorno == "y" or soundsorno == "yes":
-        playsound("Citys Night ambience sounds.wav")
+        playsound(random.choice(background))
     else:
-        playsound("soundthatneedstoplayatthebeginningforaveryspecificreasonthatidontknow-49490711.wav")
+        playsound(random.choice(Silence))
     while Hours1 != Hours2 or Minutes1 != Minutes2:
         if secondtime == True:
             print(fiveminutecountdown)
