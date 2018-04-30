@@ -1,12 +1,17 @@
 '''
 Title: This is an alarm that perfectly lines up with my sleep schedule
 Author: Riley Carpenter
+TODO: have the volume get louder when it goes off and quieter afterwards
 '''
 from pygame import mixer
 import time
 import os
 import sys
 import random
+import getpass
+Hours3 = 5
+Minutes3 = 5
+endorno = ""
 Currenttime = time.ctime()
 Hours1 = int(Currenttime[11:13])
 Minutes1 = int(Currenttime[14:16])
@@ -33,39 +38,70 @@ def alarmsystem(Hours2, Minutes2):
         mixer.music.stop()
         print(random.choice(phrases))
         playsound(random.choice(optionalsongs))
-        input("Press enter to stop the music and snooze for 5 minutes")
-alarmsystem(5,00)
-if Hours1 == 5 and Minutes1 < 5:
-    alarmsystem(5,5)
-elif Hours1 == 5 and Minutes1 < 10:
-    alarmsystem(5,10)
-elif Hours1 == 5 and Minutes1 < 15:
-    alarmsystem(5,15)
-elif Hours1 == 5 and Minutes1 < 20:
-    alarmsystem(5,20)
-elif Hours1 == 5 and Minutes1 < 25:
-    alarmsystem(5,25)
-elif Hours1 == 5 and Minutes1 < 30:
-    alarmsystem(5,30)
-elif Hours1 == 5 and Minutes1 < 35:
-    alarmsystem(5,35)
-elif Hours1 == 5 and Minutes1 < 40:
-    alarmsystem(5,40)
-elif Hours1 == 5 and Minutes1 < 45:
-    alarmsystem(5,45)
-elif Hours1 == 5 and Minutes1 < 50:
-    alarmsystem(5,50)
-elif Hours1 == 5 and Minutes1 < 55:
-    alarmsystem(5,55)
-elif Hours1 == 5 and Minutes1 > 00 or Hours1 == 6 and Minutes1 == 0:
-    alarmsystem(6,00)
-elif Hours1 == 6 and Minutes1 < 5:
-    alarmsystem(6,5)
-elif Hours1 == 6 and Minutes1 < 10:
-    alarmsystem(6,10)
-elif Hours1 == 6 and Minutes1 < 15:
-    alarmsystem(6,15)
-elif Hours1 == 6 and Minutes1 < 20:
-    alarmsystem(6,20)
-elif Hours1 == 6 and Minutes1 < 25:
-    alarmsystem(6,25)
+        endorno = input("Press enter to stop the music and snooze for 5 minutes or type stop ")
+        if endorno == "stop":
+            if getpass.getuser() == "rileyball2":
+                print("Good morning Riles")
+            else:
+                print("Good morning",getpass.getuser())
+            time.sleep(1)
+            sys.exit()
+def nexttime():
+    Currenttime = time.ctime()
+    Hours1 = int(Currenttime[11:13])
+    Minutes1 = int(Currenttime[14:16])
+    Seconds = int(Currenttime[17:19])
+    if Minutes1 >= 55:
+        print("The alarm will go off at",Hours1 + 1,":",00)
+        Hours3 = Hours1 + 1
+        Minutes3 = 0
+        alarmsystem(Hours3,Minutes3)
+    elif Minutes1 == 10:
+        print("The alarm will go off at",Hours1,":",15)
+        Hours3 = Hours1
+        Minutes3 = 15
+        alarmsystem(Hours3,Minutes3)
+    else:
+        Currenttime = time.ctime()
+        Hours1 = int(Currenttime[11:13])
+        Minutes1 = int(Currenttime[14:16])
+        Seconds = int(Currenttime[17:19])
+        if Minutes1 >= 50:
+            checkminutes = Minutes1 - 50
+        elif Minutes1 >= 40:
+            checkminutes = Minutes1 - 40
+        elif Minutes1 >= 30:
+            checkminutes = Minutes1 - 30
+        elif Minutes1 >= 20:
+            checkminutes = Minutes1 - 20
+        elif Minutes1 >= 10:
+            checkminutes = Minutes1 - 10
+        else:
+            checkminutes = Minutes1
+        for i in range(0,10):
+            if i < 5 and i == checkminutes:
+                timetogo = 5 - i
+                Minutes1 = int(Minutes1)
+                print("The alarm will go off at",Hours1,":",Minutes1 + timetogo)
+                Hours3 = Hours1
+                Minutes3 = Minutes1 + timetogo
+                alarmsystem(Hours3,Minutes3)
+            elif i == 5 and i == checkminutes:
+                timetogo = 5
+                Minutes1 = int(Minutes1)
+                print("The alarm will go off at",Hours1,":",Minutes1 + timetogo)
+                Hours3 = Hours1
+                Minutes3 = Minutes1 + timetogo
+                alarmsystem(Hours3,Minutes3)
+            elif i > 5 and i == checkminutes:
+                timetogo = 10 - i
+                Minutes1 = int(Minutes1)
+                print("The alarm will go off at",Hours1,":",Minutes1 + timetogo)
+                Hours3 = Hours1
+                Minutes3 = Minutes1 + timetogo
+                alarmsystem(Hours3,Minutes3)
+firsthour = int(input("What hour do you want this to start going off? "))
+firstminute = int(input("What minute do you want this to start going off? "))
+alarmsystem(firsthour,firstminute)
+while 1 == 1:
+    nexttime()
