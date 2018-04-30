@@ -1,7 +1,7 @@
 '''
 Title: This is an alarm that perfectly lines up with my sleep schedule
 Author: Riley Carpenter
-TODO: have the volume get louder when it goes off and quieter afterwards, Make it so that the songs are in a folder and it just scans that folder
+TODO: have the volume get louder when it goes off and quieter afterwards
 '''
 from pygame import mixer
 import time
@@ -10,6 +10,10 @@ import sys
 import random
 import getpass
 import alsaaudio
+import glob
+import os
+dir_path = os.path.dirname(os.path.realpath(__file__))
+optionalsongs = (glob.glob(dir_path + "/Songs/*.wav"))
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #VOLUME CONTROL AREA
 
@@ -48,7 +52,6 @@ elif timeofday == "Afternoon":
     phrases = ["It's the afternoon!! When you have homemade snacks and nice delicious foods and your alarm goes off","Afternoon time!","ALARM ALARM ALARM IT IS IN THE AFTERNOON","Hey buddy your alarm is going off","Hey!!!! Do the thing!"]
 elif timeofday == "Night":
     phrases = ["Goodnight! But like in a different way goodnight!","Hey it's the nighttime! AND your alarm is going off!! SOOO weird!!!!!!"]
-optionalsongs = ["Pink Floyd Time.wav","Alarm2.wav","Alarm3.wav","Alarm4.wav","Alarm5.wav","Alarm6.wav","Alarm7.wav","Alarm8.wav","Alarm9.wav","Alarm10.wav","Alarm11.wav"]
 if timeofday == "Night":
     soundsorno = input("Hey I saw that this is Night so I wanted to know if you want to play the city sounds? Y/N ")
 else:
@@ -89,9 +92,10 @@ def alarmsystem(Hours2, Minutes2):
         endorno = input("Press enter to stop the music and snooze for 5 minutes or type stop ")
         if endorno == "stop":
             if getpass.getuser() == "rileyball2":
-                name = ["Riles","Riley Carpenter","Riley Mitchel Carpenter","Rileybug","Rileyball","Rile","Michelle","Riley Michelle Carpenter","Diane","Comrade"]
+                name2 = ["Riles","Riley Carpenter","Riley Mitchel Carpenter","Rileybug","Rileyball","Rile","Michelle","Riley Michelle Carpenter","Diane","Comrade"]
+                name = random.choice(name2)
             else:
-                name = [getpass.getuser()]
+                name = getpass.getuser()
             if timeofday == "Bedtime":
                 print("Good morning",name)
             elif timeofday == "Day":
