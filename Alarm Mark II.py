@@ -15,7 +15,7 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 optionalsongs = (glob.glob(dir_path + "/Songs/*.wav*"))
 optionalsongs += (glob.glob(dir_path + "/Songs/*.mp3"))
 if getpass.getuser() == "rileyball2":
-    optionalsongs += (glob.glob("/home/rileyball2/Music/Pat the Bunny/SongsByJohnnyHoboAndTheFreightTrains/*.mp3"))
+    optionalsongs += (glob.glob("/home/rileyball2/Music/Pat the Bunny/SongsByJohnnyHoboAndTheFreightTrains/*.mp3")) #This just adds some music from my laptop to it so I don't have to drag a whole other folder
 background = (glob.glob(dir_path + "/Backgroundsounds/*.wav"))
 background += (glob.glob(dir_path + "/Backgroundsounds/*.mp3"))
 if (os.path.exists(dir_path +"/Backgroundsounds")) == False:
@@ -83,10 +83,10 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     if soundisplaying == True: #Checks if sound is playing because if it is and you stop sound it will break
         mixer.music.stop()
         soundisplaying = False
-    if timeofday == "Bedtime" and (os.path.exists(dir_path +"/Backgroundsounds")) == True:
+    if timeofday == "Bedtime" and background != []: #Insures that the background sound won't play if it doesn't exist
         soundisplaying = True
         playsound(random.choice(background))
-    elif soundsorno == "Y" or soundsorno == "Yes" or soundsorno == "y" or soundsorno == "yes" and (os.path.exists(dir_path + "/Backgroundsounds")) == True:
+    elif soundsorno == "Y" or soundsorno == "Yes" or soundsorno == "y" or soundsorno == "yes" and background != []:
         playsound(random.choice(background))
         soundisplaying = True
     while Hours1 != Hours2 or Minutes1 != Minutes2:
@@ -102,15 +102,15 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         if soundisplaying == True:
             mixer.music.stop()
         print(random.choice(phrases))
-        if (os.path.exists(dir_path + "/Songs")) == True:
+        if optionalsongs != []:
             soundisplaying = True
             musictoplay = random.choice(optionalsongs)
             print("The song that will play for your sweet ears is",musictoplay)
             playsound(musictoplay)
         endorno = input("Press enter to stop the music and snooze for 5 minutes or type stop ")
         if endorno == "stop":
-            if getpass.getuser() == "rileyball2":
-                name2 = ["Riles","Riley Carpenter","Riley Mitchel Carpenter","Rileybug","Rileyball","Rile","Michelle","Riley Michelle Carpenter","Diane","Comrade"]
+            if getpass.getuser() == "rileyball2": #My user account, this is so I can set my own nicknames here, if you want to you can modify this
+                name2 = ["Riles","Riley Carpenter","Riley Mitchel Carpenter","Rileybug","Rileyball","Rile","Michelle","Riley Michelle Carpenter","Diane","Comrade"] #Bunch of nickity names for me
                 name = random.choice(name2)
             else:
                 name = getpass.getuser()
