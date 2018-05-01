@@ -14,7 +14,8 @@ import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
 optionalsongs = (glob.glob(dir_path + "/Songs/*.wav*"))
 optionalsongs += (glob.glob(dir_path + "/Songs/*.mp3"))
-optionalsongs += (glob.glob("/home/rileyball2/Music/Pat the Bunny/SongsByJohnnyHoboAndTheFreightTrains/*.mp3"))
+if getpass.getuser() == "rileyball2":
+    optionalsongs += (glob.glob("/home/rileyball2/Music/Pat the Bunny/SongsByJohnnyHoboAndTheFreightTrains/*.mp3"))
 background = (glob.glob(dir_path + "/Backgroundsounds/*.wav"))
 background += (glob.glob(dir_path + "/Backgroundsounds/*.mp3"))
 if (os.path.exists(dir_path +"/Backgroundsounds")) == False:
