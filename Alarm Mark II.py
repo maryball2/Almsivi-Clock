@@ -1,7 +1,7 @@
 '''
 Title: This is an alarm that perfectly lines up with my sleep schedule
 Author: Riley Carpenter
-TODO: have the volume get louder when it goes off and quieter afterwards
+TODO: have the volume get louder when it goes off and quieter afterwards, if possible have it both run and end redshift when it is nightime
 '''
 from pygame import mixer
 import time
@@ -15,8 +15,9 @@ import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
 optionalsongs = (glob.glob(dir_path + "/Songs/*.wav*"))
 optionalsongs += (glob.glob(dir_path + "/Songs/*.mp3"))
+optionalsongs += (glob.glob("/home/rileyball2/Music/Pat the Bunny/SongsByJohnnyHoboAndTheFreightTrains/*.mp3"))
 background = (glob.glob(dir_path + "/Backgroundsounds/*.wav"))
-background = (glob.glob(dir_path + "/Backgroundsounds/*.mp3"))
+background += (glob.glob(dir_path + "/Backgroundsounds/*.mp3"))
 if (os.path.exists(dir_path +"/Backgroundsounds")) == False:
     os.makedirs(dir_path + "/Backgroundsounds")
 if (os.path.exists(dir_path +"/Songs")) == False:
@@ -64,22 +65,22 @@ if timeofday == "Night":
     soundsorno = input("Hey I saw that this is Night so I wanted to know if you want to play the city sounds? Y/N ")
 else:
     soundsorno = ""
-def playsound(soundfile):
+def playsound(soundfile): #This is how you play the music
     mixer.init()
     mixer.music.load(soundfile)
     mixer.music.play(-1)
-def gettime():
+def gettime(): #This gets the current time but I put this in so late I never used it lol
     Currenttime = time.ctime()
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
     Seconds = int(Currenttime[17:19])
-def alarmsystem(Hours2, Minutes2):
+def alarmsystem(Hours2, Minutes2): #Main alarm loop
     global soundisplaying
     Currenttime = time.ctime()
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
     Seconds = int(Currenttime[17:19])
-    if soundisplaying == True:
+    if soundisplaying == True: #Checks if sound is playing because if it is and you stop sound it will break
         mixer.music.stop()
         soundisplaying = False
     if timeofday == "Bedtime" and (os.path.exists(dir_path +"/Backgroundsounds")) == True:
@@ -103,7 +104,9 @@ def alarmsystem(Hours2, Minutes2):
         print(random.choice(phrases))
         if (os.path.exists(dir_path + "/Songs")) == True:
             soundisplaying = True
-            playsound(random.choice(optionalsongs))
+            musictoplay = random.choice(optionalsongs)
+            print("The song that will play for your sweet ears is",musictoplay)
+            playsound(musictoplay)
         endorno = input("Press enter to stop the music and snooze for 5 minutes or type stop ")
         if endorno == "stop":
             if getpass.getuser() == "rileyball2":
