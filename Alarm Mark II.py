@@ -9,7 +9,6 @@ import os
 import sys
 import random
 import getpass
-import alsaaudio
 import glob
 import os
 dir_path = os.path.dirname(os.path.realpath(__file__))
