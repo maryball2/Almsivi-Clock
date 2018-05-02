@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 Title: This is an alarm that perfectly lines up with my sleep schedule
 Author: Riley Carpenter
@@ -11,13 +12,16 @@ import random
 import getpass
 import glob
 import os
+global secondtime
 dir_path = os.path.dirname(os.path.realpath(__file__))
 optionalsongs = (glob.glob(dir_path + "/Songs/*.wav*"))
+'''
 optionalsongs += (glob.glob(dir_path + "/Songs/*.mp3"))
 if getpass.getuser() == "rileyball2":
     optionalsongs += (glob.glob("/home/rileyball2/Music/Pat the Bunny/SongsByJohnnyHoboAndTheFreightTrains/*.mp3")) #This just adds some music from my laptop to it so I don't have to drag a whole other folder
+'''
 background = (glob.glob(dir_path + "/Backgroundsounds/*.wav"))
-background += (glob.glob(dir_path + "/Backgroundsounds/*.mp3"))
+#background += (glob.glob(dir_path + "/Backgroundsounds/*.mp3"))
 if (os.path.exists(dir_path +"/Backgroundsounds")) == False:
     os.makedirs(dir_path + "/Backgroundsounds")
 if (os.path.exists(dir_path +"/Songs")) == False:
@@ -37,6 +41,11 @@ Seconds = int(Currenttime[17:19])
 fiveminutecountdown = 300
 startinghour = int(Currenttime[11:13])
 soundisplaying = False
+global clearorcls
+if sys.platform == "linux" or sys.platform == "posix":
+    clearorcls = "clear"
+else:
+    clearorcls = "cls"
 if startinghour >= 22 or startinghour <= 4:
     timeofday = "Bedtime"
 elif startinghour >= 6 and startinghour <= 8:
@@ -90,6 +99,7 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         playsound(random.choice(background))
         soundisplaying = True
     while Hours1 != Hours2 or Minutes1 != Minutes2:
+        os.system(clearorcls)
         if secondtime == True:
             print(fiveminutecountdown)
             fiveminutecountdown -= 1
@@ -97,6 +107,10 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         Hours1 = int(Currenttime[11:13])
         Minutes1 = int(Currenttime[14:16])
         Seconds = int(Currenttime[17:19])
+        Hours1 = str(Hours1)
+        Minutes1 = str(Minutes1)
+        gettime()
+        print(Hours1 + ":" + Minutes1,"is not",hoursandminutes,"therefore the alarm is not going off")
         time.sleep(1)
     else:
         if soundisplaying == True:
@@ -184,9 +198,14 @@ def nexttime():
                 Hours3 = Hours1
                 Minutes3 = Minutes1 + timetogo
                 alarmsystem(Hours3,Minutes3)
-firsthour = int(input("What hour do you want this to start going off? "))
-firstminute = int(input("What minute do you want this to start going off? "))
 secondtime = False
+hoursandminutes = input("What time do you want to get up (type like this: 22:14) ")
+firsthour = int(hoursandminutes[0:1])
+firstandhalfsecondminute = (hoursandminutes[3:4])
+if len(firstandhalfsecondminute) != 2:
+    firstminute = int(firstandhalfsecondminute)
+else:
+    firstminute = int(firstandhalfsecondminute)
 alarmsystem(firsthour,firstminute)
 while 1 == 1:
     nexttime()
