@@ -84,6 +84,7 @@ def gettime(): #This gets the current time but I put this in so late I never use
     Minutes1 = int(Currenttime[14:16])
     Seconds = int(Currenttime[17:19])
 def alarmsystem(Hours2, Minutes2): #Main alarm loop
+    alarmtimer = 0
     global soundisplaying
     Currenttime = time.ctime()
     Hours1 = int(Currenttime[11:13])
@@ -108,18 +109,35 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         Minutes1 = int(Currenttime[14:16])
         Seconds = int(Currenttime[17:19])
         Hours1 = str(Hours1)
-        Minutes1 = str(Minutes1)
-        gettime()
-        print(Hours1 + ":" + Minutes1,"is not",hoursandminutes,"therefore the alarm is not going off")
+        if Minutes1 < 10:
+            Minutes1 = str("0" + str(Minutes1))
+        else:
+            Minutes1 = str(Minutes1)
+        Hours2 = str(Hours2)
+        if Minutes2 < 10:
+            Minutes2 = str("0" + str(Minutes2))
+        else:
+            Minutes2 = str(Minutes2)
+        print(Hours1 + ":" + Minutes1,"is not",Hours2 + ":" + Minutes2,"therefore the alarm is not going off")
+        print("")
+        print("")
+        print("")
+        print("")
+        print(alarmtimer,"seconds passed")
+        alarmtimer += 1
+        Hours1 = int(Hours1)
+        Minutes1 = int(Minutes1)
+        Hours2 = int(Hours2)
+        Minutes2 = int(Minutes2)
         time.sleep(1)
     else:
+        os.system(clearorcls)
         if soundisplaying == True:
             mixer.music.stop()
         print(random.choice(phrases))
         if optionalsongs != []:
             soundisplaying = True
             musictoplay = random.choice(optionalsongs)
-            print("The song that will play for your sweet ears is",musictoplay)
             playsound(musictoplay)
         endorno = input("Press enter to stop the music and snooze for 5 minutes or type stop ")
         if endorno == "stop":
@@ -200,8 +218,14 @@ def nexttime():
                 alarmsystem(Hours3,Minutes3)
 secondtime = False
 hoursandminutes = input("What time do you want to get up (type like this: 22:14) ")
-firsthour = int(hoursandminutes[0:1])
-firstandhalfsecondminute = (hoursandminutes[3:4])
+if hoursandminutes[1] != ":":
+    firsthour = int(hoursandminutes[0:2])
+else:
+    firsthour = int(hoursandminutes[0])
+if hoursandminutes[1] != ":":
+    firstandhalfsecondminute = (hoursandminutes[3:5])
+else:
+    firstandhalfsecondminute = (hoursandminutes[2:4])
 if len(firstandhalfsecondminute) != 2:
     firstminute = int(firstandhalfsecondminute)
 else:
