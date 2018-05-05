@@ -229,9 +229,9 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         else:
             fulltime = ["The amount of time that has passed is",seconds,second]
         if hoursinbetween > 0:
-            print("The amount of time, since the start, that needs to pass is",hoursinbetween,hoursinbetweenmodifier,"and",minutesinbetween,minutesinbetweenmodifier)
+            print("The amount of time, since the start, that needs to pass is more or less",hoursinbetween,hoursinbetweenmodifier,"and",minutesinbetween,minutesinbetweenmodifier)
         else:
-            print("The amount of time, since the start, that needs to pass is",minutesinbetween,minutesinbetweenmodifier)
+            print("The amount of time, since the start, that needs to pass is more or less",minutesinbetween,minutesinbetweenmodifier)
         print("")
         print(*fulltime,sep = " ")
         #End of that area that does the stopwatch
