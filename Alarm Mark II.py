@@ -121,6 +121,26 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
     Seconds = int(Currenttime[17:19])
+    hoursinbetween = 0
+    hourstoaddtoo = Hours1
+    minutesinbetween = 0
+    while hourstoaddtoo + hoursinbetween != Hours2:
+        hoursinbetween += 1
+        if hourstoaddtoo + hoursinbetween == 24:
+            hourstoaddtoo = 0
+    minutesinbetween = Minutes2 - Minutes1 #These lines of code are to figure out how many hours and minutes are inbetween the two times
+    if minutesinbetween < 0:
+        minutesinbetween = Minutes1 - Minutes2
+    if minutesinbetween != 0:
+        hoursinbetween -= 1
+    if hoursinbetween > 1 or hoursinbetween < 1:
+        hoursinbetweenmodifier = "hours"
+    else:
+        hoursinbetweenmodifier  = "hour"
+    if minutesinbetween > 1 or minutesinbetween < 1:
+        minutesinbetweenmodifier = "minutes"
+    else:
+        minutesinbetweenmodifier = "minute"
     if soundisplaying == True: #Checks if sound is playing because if it is and you stop sound it will break
         mixer.music.stop()
         soundisplaying = False
@@ -149,6 +169,7 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
             Minutes2 = str("0" + str(Minutes2))
         else:
             Minutes2 = str(Minutes2)
+
         print("\033[1m" + Hours1 + ":" + Minutes1,"is not",Hours2 + ":" + Minutes2,"therefore the alarm is not going off" + "\033[0m")
         print("")
         print("")
@@ -207,6 +228,11 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
             fulltime = ["The amount of time that has passed is",minutes,minute,seconds,second]
         else:
             fulltime = ["The amount of time that has passed is",seconds,second]
+        if hoursinbetween > 0:
+            print("The amount of time, since the start, that needs to pass is",hoursinbetween,hoursinbetweenmodifier,"and",minutesinbetween,minutesinbetweenmodifier)
+        else:
+            print("The amount of time, since the start, that needs to pass is",minutesinbetween,minutesinbetweenmodifier)
+        print("")
         print(*fulltime,sep = " ")
         #End of that area that does the stopwatch
         Hours1 = int(Hours1)
