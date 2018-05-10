@@ -124,11 +124,23 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     hoursinbetween = 0
     hourstoaddtoo = Hours1
     minutesinbetween = 0
-    while hourstoaddtoo + hoursinbetween != Hours2:
-        hoursinbetween += 1
-        if hourstoaddtoo + hoursinbetween == 24:
-            hourstoaddtoo = 0
-    minutesinbetween = Minutes2 - Minutes1 #These lines of code are to figure out how many hours and minutes are inbetween the two times
+    if Hours1 >= 12 and Hours2 <= 12 or Hours1 <= 12 and Hours2 >= 12:
+        if Hours1 > 12:
+            timewearegoingto = "midnight"
+            timetomidnightornoon = 24 - Hours1
+        else:
+            timewearegoingto = "noon"
+            timetomidnightornoon = 12 - Hours1
+        if timewearegoingto == "midnight":
+            timepastmidnightornoon = Hours2 - 00
+        else:
+            timepastmidnightornoon = Hours2 - 12
+        hoursinbetween = timetomidnightornoon + timepastmidnightornoon
+    if Minutes2 == 0:
+        Minutes2mod = 60
+    else:
+        Minutes2mod = 00
+    minutesinbetween = Minutes2mod - Minutes1 #These lines of code are to figure out how many hours and minutes are inbetween the two times
     if minutesinbetween < 0:
         minutesinbetween = Minutes1 - Minutes2
     if minutesinbetween != 0:
@@ -160,6 +172,14 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         Minutes1 = int(Currenttime[14:16])
         Seconds = int(Currenttime[17:19])
         Hours1 = str(Hours1)
+        if hoursinbetween > 1 or hoursinbetween < 1:
+            hoursinbetweenmodifier = "hours"
+        else:
+            hoursinbetweenmodifier  = "hour"
+        if minutesinbetween > 1 or minutesinbetween < 1:
+            minutesinbetweenmodifier = "minutes"
+        else:
+            minutesinbetweenmodifier = "minute"
         if Minutes1 < 10:
             Minutes1 = str("0" + str(Minutes1))
         else:
@@ -175,65 +195,20 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         print("")
         print("")
         print("")
-        #This is the area that controls the stopwatch that counts how long you've had the alarm on
+        #This is the area that controls the stopwatch that counts how long the alarm needs to be on
         seconds += 1
-        if seconds == 60:
-            seconds = 0
-            minutes +=1
-        elif minutes == 60:
-            minutes = 0
-            hours += 1
-        elif hours == 24:
-            hours = 0
-            days != 1
-        elif days == 365:
-            days = 0
-            years += 1
-        elif years == 10:
-            years = 0
-            decades += 1
-        while decades >= 1:
-            print("You've been running this alarm for a straight decade??? HOw???")
-        if years == 1:
-            year = "year"
-        else:
-            year = "years"
-        if days == 1:
-            day = "day"
-        else:
-            day = "days"
-        if hours == 1:
-            hour = "hour"
-        else:
-            hour = "hours"
-        if minutes == 1:
-            minute = "minute"
-        else:
-            minute = "minutes"
-        if seconds == 1:
-            second = "second"
-        else:
-            second = "seconds"
-        if milliseconds == 1:
-            millisecond = "millisecond"
-        else:
-            millisecond = "milliseconds"
-        if years >= 1:
-            fulltime = ["The amount of time that has passed is",years,year,hours,hour,minutes,minute,seconds,second]
-        elif days >= 1:
-            fulltime = ["The amount of time that has passed is",days,day,hours,hour,minutes,minute,seconds,second]
-        elif hours >= 1:
-            fulltime = ["The amount of time that has passed is",hours,hour,minutes,minute,seconds,second]
-        elif minutes >= 1:
-            fulltime = ["The amount of time that has passed is",minutes,minute,seconds,second]
-        else:
-            fulltime = ["The amount of time that has passed is",seconds,second]
         if hoursinbetween > 0:
-            print("The amount of time, since the start, that needs to pass is more or less",hoursinbetween,hoursinbetweenmodifier,"and",minutesinbetween,minutesinbetweenmodifier)
+            print("The amount of time that needs to pass is",hoursinbetween,hoursinbetweenmodifier,"and",minutesinbetween,minutesinbetweenmodifier,"... more or less")
+        elif hoursinbetween <= 0 and minutesinbetween > 0:
+            print("The amount of time that needs to pass is",minutesinbetween,minutesinbetweenmodifier,"more or less")
         else:
-            print("The amount of time, since the start, that needs to pass is more or less",minutesinbetween,minutesinbetweenmodifier)
+            print("It was more")
         print("")
-        print(*fulltime,sep = " ")
+        if seconds % 60 == 0:
+            minutesinbetween -= 1
+        if minutesinbetween < 0:
+            minutesinbetween = 59
+            hoursinbetween -= 1
         #End of that area that does the stopwatch
         Hours1 = int(Hours1)
         Minutes1 = int(Minutes1) #Reset everything to integer from string
@@ -327,7 +302,8 @@ def nexttime():
                 Minutes3 = Minutes1 + timetogo
                 alarmsystem(Hours3,Minutes3)
 secondtime = False
-hoursandminutes = input("What time do you want to get up (type like this: 22:14) ")
+os.system(clearorcls)
+hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
 if hoursandminutes[1] != ":":
     firsthour = int(hoursandminutes[0:2])
 else:
