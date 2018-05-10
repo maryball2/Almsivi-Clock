@@ -140,6 +140,8 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         if Hours1 > Hours2:
             minus = Hours2 - Hours1
             hoursinbetween = 24 - minus
+        elif Hours1 == Hours2 and Minutes2 < Minutes1:
+            hoursinbetween = 24
         else:
             hoursinbetween = Hours2 - Hours1
     if Minutes2 == 0:
@@ -214,7 +216,7 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         elif hoursinbetween <= 0 and minutesinbetween > 0 and 60 - Seconds == 60:
             print(minutesinbetween,minutesinbetweenmodifier,"is left more or less")
         elif hoursinbetween <= 0 and minutesinbetween > 0 and 60 - Seconds != 60:
-            print(minutesinbetween,minutesinbetweenmodifier,"and",60 - Seconds.secondmodifier,"is left more or less")
+            print(minutesinbetween,minutesinbetweenmodifier,"and",60 - Seconds,secondmodifier,"is left more or less")
         else:
             print("It was more")
         print("")
