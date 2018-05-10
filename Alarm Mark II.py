@@ -70,36 +70,7 @@ if sys.platform == "linux" or sys.platform == "posix":
     clearorcls = "clear"
 else:
     clearorcls = "cls"
-#This is where I make it so it's easier to tell what the time of day is
-if startinghour >= 22 or startinghour <= 4:
-    timeofday = "Bedtime"
-elif startinghour >= 6 and startinghour <= 8:
-    timeofday = "Morning"
-elif startinghour >= 9 and startinghour <= 11:
-    timeofday = "Day"
-elif startinghour == 12:
-    timeofday = "Noon"
-elif startinghour >= 13 and startinghour <= 18:
-    timeofday = "Afternoon"
-elif startinghour >= 17 and startinghour <= 22:
-    timeofday = "Night"
-#The phrases that go off during the alarm? Set here
-if timeofday == "Bedtime":
-    phrases = ["Wake up Riley!!!!","It's time to wake up it's time to wake up","HEEEEYYY WAKE UP","RILEY RILEY RILEY WAKE UP","1 2 3 4 5 6 7 8 9 it is time to wake up","Riley more alarms are to come UNLESS you get up","OH WHEN SHALL I SEE JESUS you wanna not hear this again? Wake up","I'm so tired of telling you to wake up just wake up","A friend of the devil is somehow who doesn't wake up","Babe babe bae wake up"]
-elif timeofday == "Morning":
-    phrases = ["Your morning alarm is going off!!!!! I suggest you answer it!","This is your slightly later than morning alarm but still in the morning area!!!!","Good morning but like in a different way!!!!","It's time to cancel this alarm as it's going off but not in the way you wanted!!!","HELLLO TIME TO CONTINUE IN YOUR DAY"]
-elif timeofday == "Day":
-    phrases = ["You are usually at school like what why are you using this?","BEEEP BEEP BEEP is what a normal alarm says but I do not as I'm #NOTNORMAL","Hey user this is a really good alarm clock I wonder if their is a reason for that HMMMMMMMMMMM","OHH it's time for the ALARM GAME the goal of this game is to have your alarm go off, YOU WON!"]
-elif timeofday == "Noon":
-    phrases = ["You started at noon and you end here, congratulations you bastard","I don't know why I set noon as a time like you probably aren't setting it off at noon.. Unless you are"]
-elif timeofday == "Afternoon":
-    phrases = ["It's the afternoon!! When you have homemade snacks and nice delicious foods and your alarm goes off","Afternoon time!","ALARM ALARM ALARM IT IS IN THE AFTERNOON","Hey buddy your alarm is going off","Hey!!!! Do the thing!"]
-elif timeofday == "Night":
-    phrases = ["Goodnight! But like in a different way goodnight!","Hey it's the nighttime! AND your alarm is going off!! SOOO weird!!!!!!"]
-if timeofday == "Night":
-    soundsorno = input("Hey I saw that this is Night so I wanted to know if you want to play the city sounds? Y/N ")
-else:
-    soundsorno = ""
+
 def playsound(soundfile): #This is how you play the music
     mixer.init()
     mixer.music.load(soundfile)
@@ -146,7 +117,6 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
             hoursinbetween = Hours2 - Hours1
     if Minutes2 == 0:
         Minutes2mod = 60
-    else:
         Minutes2mod = 00
     minutesinbetween = Minutes2mod - Minutes1 #These lines of code are to figure out how many hours and minutes are inbetween the two times
     if minutesinbetween < 0:
@@ -332,6 +302,33 @@ if len(firstandhalfsecondminute) != 2:
     firstminute = int(firstandhalfsecondminute)
 else:
     firstminute = int(firstandhalfsecondminute)
+#This is where I make it so it's easier to tell what the time of day is
+if firsthour >= 4 and firsthour <= 11:
+    timeofday = "Bedtime"
+elif firsthour == 12:
+    timeofday = "Noon"
+elif firsthour >= 13 and firsthour <= 17:
+    timeofday == "Afternoon"
+elif firsthour >= 18 and firsthour <= 3:
+    timeofday == "Night"
+#The phrases that go off during the alarm? Set here
+if timeofday == "Bedtime":
+    phrases = ["Wake up Riley!!!!","It's time to wake up it's time to wake up","HEEEEYYY WAKE UP","RILEY RILEY RILEY WAKE UP","1 2 3 4 5 6 7 8 9 it is time to wake up","Riley more alarms are to come UNLESS you get up","OH WHEN SHALL I SEE JESUS you wanna not hear this again? Wake up","I'm so tired of telling you to wake up just wake up","A friend of the devil is somehow who doesn't wake up","Babe babe bae wake up"]
+elif timeofday == "Morning":
+    phrases = ["Your morning alarm is going off!!!!! I suggest you answer it!","This is your slightly later than morning alarm but still in the morning area!!!!","Good morning but like in a different way!!!!","It's time to cancel this alarm as it's going off but not in the way you wanted!!!","HELLLO TIME TO CONTINUE IN YOUR DAY"]
+elif timeofday == "Day":
+    phrases = ["You are usually at school like what why are you using this?","BEEEP BEEP BEEP is what a normal alarm says but I do not as I'm #NOTNORMAL","Hey user this is a really good alarm clock I wonder if their is a reason for that HMMMMMMMMMMM","OHH it's time for the ALARM GAME the goal of this game is to have your alarm go off, YOU WON!"]
+elif timeofday == "Noon":
+    phrases = ["Happy Noon!","It is now noon! Wake up!"]
+elif timeofday == "Afternoon":
+    phrases = ["It's the afternoon!! When you have homemade snacks and nice delicious foods and your alarm goes off","Afternoon time!","ALARM ALARM ALARM IT IS IN THE AFTERNOON","Hey buddy your alarm is going off","Hey!!!! Do the thing!"]
+elif timeofday == "Night":
+    phrases = ["Goodnight! But like in a different way goodnight!","Hey it's the nighttime! AND your alarm is going off!! SOOO weird!!!!!!"]
+if timeofday == "Noon":
+    soundsorno = input("Hey I saw that this is going off at noon so I wanted to know if you want to play the city sounds? Y/N ")
+    timeofday = "Bedtime"
+else:
+    soundsorno = ""
 alarmsystem(firsthour,firstminute)
 while 1 == 1:
     nexttime()
