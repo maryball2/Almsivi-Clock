@@ -136,6 +136,12 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         else:
             timepastmidnightornoon = Hours2 - 12
         hoursinbetween = timetomidnightornoon + timepastmidnightornoon
+    else:
+        if Hours1 > Hours2:
+            minus = Hours2 - Hours1
+            hoursinbetween = 24 - minus
+        else:
+            hoursinbetween = Hours2 - Hours1
     if Minutes2 == 0:
         Minutes2mod = 60
     else:
@@ -180,6 +186,10 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
             minutesinbetweenmodifier = "minutes"
         else:
             minutesinbetweenmodifier = "minute"
+        if 60 - Seconds == 1:
+            secondmodifier = "second"
+        else:
+            secondmodifier = "seconds"
         if Minutes1 < 10:
             Minutes1 = str("0" + str(Minutes1))
         else:
@@ -197,10 +207,14 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         print("")
         #This is the area that controls the stopwatch that counts how long the alarm needs to be on
         seconds += 1
-        if hoursinbetween > 0:
-            print("The amount of time that needs to pass is",hoursinbetween,hoursinbetweenmodifier,"and",minutesinbetween,minutesinbetweenmodifier,"... more or less")
-        elif hoursinbetween <= 0 and minutesinbetween > 0:
-            print("The amount of time that needs to pass is",minutesinbetween,minutesinbetweenmodifier,"more or less")
+        if hoursinbetween > 0 and 60 - Seconds != 60:
+            print(hoursinbetween,hoursinbetweenmodifier,minutesinbetween,minutesinbetweenmodifier,"and",60 - Seconds,secondmodifier,"is left more or less")
+        elif hoursinbetween  > 0 and 60 - Seconds == 60:
+            print(hoursinbetween,hoursinbetweenmodifier,minutesinbetween,minutesinbetweenmodifier,"and",60 - Seconds,secondmodifier,"is left more or less")
+        elif hoursinbetween <= 0 and minutesinbetween > 0 and 60 - Seconds == 60:
+            print(minutesinbetween,minutesinbetweenmodifier,"is left more or less")
+        elif hoursinbetween <= 0 and minutesinbetween > 0 and 60 - Seconds != 60:
+            print(minutesinbetween,minutesinbetweenmodifier,"and",60 - Seconds.secondmodifier,"is left more or less")
         else:
             print("It was more")
         print("")
