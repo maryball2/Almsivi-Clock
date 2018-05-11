@@ -53,6 +53,7 @@ hours = 0
 days = 0
 years = 0
 decades = 0
+Minutes2mod = 0
 class color: #This is for bold apparently??? IDK I found it on stack overflow
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -88,6 +89,7 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     years = 0
     decades = 0
     global soundisplaying
+    global Minutes2mod
     Currenttime = time.ctime()
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
