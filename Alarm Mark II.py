@@ -106,6 +106,9 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     minutesinbetween = 60 - Minutes1
     if minutesinbetween != 0:
         hoursinbetween -= 1
+    secondsinbetween = 60 - Seconds
+    if secondsinbetween != 0:
+        minutesinbetween -= 1
     if hoursinbetween > 1 or hoursinbetween < 1:
         hoursinbetweenmodifier = "hours"
     else:
