@@ -94,35 +94,16 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
     Seconds = int(Currenttime[17:19])
+    hours4 = Hours1
     hoursinbetween = 0
     hourstoaddtoo = Hours1
     minutesinbetween = 0
-    if Hours1 >= 12 and Hours2 <= 12 or Hours1 <= 12 and Hours2 >= 12:
-        if Hours1 > 12:
-            timewearegoingto = "midnight"
-            timetomidnightornoon = 24 - Hours1
-        else:
-            timewearegoingto = "noon"
-            timetomidnightornoon = 12 - Hours1
-        if timewearegoingto == "midnight":
-            timepastmidnightornoon = Hours2 - 00
-        else:
-            timepastmidnightornoon = Hours2 - 12
-        hoursinbetween = timetomidnightornoon + timepastmidnightornoon
-    else:
-        if Hours1 > Hours2:
-            minus = Hours2 - Hours1
-            hoursinbetween = 24 - minus
-        elif Hours1 == Hours2 and Minutes2 < Minutes1:
-            hoursinbetween = 24
-        else:
-            hoursinbetween = Hours2 - Hours1
-    if Minutes2 == 0:
-        Minutes2mod = 60
-        Minutes2mod = 00
-    minutesinbetween = Minutes2mod - Minutes1 #These lines of code are to figure out how many hours and minutes are inbetween the two times
-    if minutesinbetween < 0:
-        minutesinbetween = Minutes1 - Minutes2
+    while hours4 != hours1:
+        hours4 += 1
+        hoursinbetween += 1
+        if hour4 == 24:
+            hour4 = 0
+    minutesinbetween = 60 - Minutes1
     if minutesinbetween != 0:
         hoursinbetween -= 1
     if hoursinbetween > 1 or hoursinbetween < 1:
