@@ -98,7 +98,7 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     hoursinbetween = 0
     hourstoaddtoo = Hours1
     minutesinbetween = 0
-    while hours4 != hours1:
+    while hours4 != Hours1:
         hours4 += 1
         hoursinbetween += 1
         if hour4 == 24:
