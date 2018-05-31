@@ -3,6 +3,11 @@ Title: Alarm Mark II
 Author: Riley Carpenter
 TODO: have the volume get louder when it goes off and quieter afterwards, if possible have it both run and end redshift when it is nightime, large text for the alarm section would be nice and also make it easier to read in the morning
 '''
+
+
+
+
+
 from pygame import mixer
 import time
 import os
@@ -18,6 +23,16 @@ global hours
 global days
 global years
 global decades
+global pressedstop
+
+
+
+
+
+
+
+
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 optionalsongs = (glob.glob(dir_path + "/Songs/*.wav*"))
 '''
@@ -27,22 +42,54 @@ if getpass.getuser() == "rileyball2":
 '''
 background = (glob.glob(dir_path + "/Backgroundsounds/*.wav"))
 #background += (glob.glob(dir_path + "/Backgroundsounds/*.mp3"))
+
+
+
+
+
+
+
+
 if (os.path.exists(dir_path +"/Backgroundsounds")) == False:
     os.makedirs(dir_path + "/Backgroundsounds")
 if (os.path.exists(dir_path +"/Songs")) == False:
     os.makedirs(dir_path + "/Songs")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #VOLUME CONTROL AREA
 
 #VOLUME CONTROL AREA
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+
+
 Hours3 = 5
 Minutes3 = 5
 endorno = ""
+pressedstop = False
 Currenttime = time.ctime()
 Hours1 = int(Currenttime[11:13])
 Minutes1 = int(Currenttime[14:16])
 Seconds = int(Currenttime[17:19])
+dayofweek = Currenttime[0:3]
 fiveminutecountdown = 300
 startinghour = int(Currenttime[11:13])
 soundisplaying = False
@@ -54,6 +101,17 @@ days = 0
 years = 0
 decades = 0
 Minutes2mod = 0
+
+
+
+
+
+
+
+
+
+
+
 class color: #This is for bold apparently??? IDK I found it on stack overflow
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -66,22 +124,65 @@ class color: #This is for bold apparently??? IDK I found it on stack overflow
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 #This is where I make the clearscreen function universal for all systems
+
+
+
+
+
+
+
+
+
+
+
 global clearorcls
 if sys.platform == "linux" or sys.platform == "posix":
     clearorcls = "clear"
 else:
     clearorcls = "cls"
 
+
+
+
+
+
+
 def playsound(soundfile): #This is how you play the music
     mixer.init()
     mixer.music.load(soundfile)
     mixer.music.play(-1)
+
+
+
+
+
+
+
+
 def gettime(): #This gets the current time but I put this in so late I never used it lol
     Currenttime = time.ctime()
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
     Seconds = int(Currenttime[17:19])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def alarmsystem(Hours2, Minutes2): #Main alarm loop
+    global pressedstop
     seconds = 0
     minutes = 0
     hours = 0
@@ -120,12 +221,9 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     if soundisplaying == True: #Checks if sound is playing because if it is and you stop sound it will break
         mixer.music.stop()
         soundisplaying = False
-    if timeofday == "Bedtime" and background != []: #Insures that the background sound won't play if it doesn't exist
+    if background != []: #Insures that the background sound won't play if it doesn't exist
         soundisplaying = True
         playsound(random.choice(background))
-    elif soundsorno == "Y" or soundsorno == "Yes" or soundsorno == "y" or soundsorno == "yes" and background != []:
-        playsound(random.choice(background))
-        soundisplaying = True
     while Hours1 != Hours2 or Minutes1 != Minutes2:
         os.system(clearorcls)
         if secondtime == True:
@@ -203,20 +301,21 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
                 name = random.choice(name2)
             else:
                 name = getpass.getuser()
-            if timeofday == "Bedtime":
-                print("Good morning",name)
-            elif timeofday == "Day":
-                print("Goodbye and semi-Good morning",name)
-            elif timeofday == "Noon":
-                print("Good probably not noon anymore but was noon",name)
-            elif timeofday == "Afternoon":
-                print("Good afternoon",name)
-            elif timeofday == "Night":
-                print("Goodbye and semi-good night",name)
-            else:
-                print("Goodbye",name)
+            print("Good morning",name)
             time.sleep(1)
-            sys.exit()
+            pressedstop = True
+
+
+
+
+
+
+
+
+
+
+
+
 def nexttime():
     secondtime = True
     fiveminutecountdown = 300
@@ -275,46 +374,44 @@ def nexttime():
                 alarmsystem(Hours3,Minutes3)
 secondtime = False
 os.system(clearorcls)
-hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
-if hoursandminutes[1] != ":":
-    firsthour = int(hoursandminutes[0:2])
-else:
-    firsthour = int(hoursandminutes[0])
-if hoursandminutes[1] != ":":
-    firstandhalfsecondminute = (hoursandminutes[3:5])
-else:
-    firstandhalfsecondminute = (hoursandminutes[2:4])
-if len(firstandhalfsecondminute) != 2:
-    firstminute = int(firstandhalfsecondminute)
-else:
-    firstminute = int(firstandhalfsecondminute)
-#This is where I make it so it's easier to tell what the time of day is
-if firsthour >= 4 and firsthour <= 11:
-    timeofday = "Bedtime"
-elif firsthour == 12:
-    timeofday = "Noon"
-elif firsthour >= 13 and firsthour <= 17:
-    timeofday == "Afternoon"
-elif firsthour >= 18 and firsthour <= 3:
-    timeofday == "Night"
+
+
+
+
+
 #The phrases that go off during the alarm? Set here
-if timeofday == "Bedtime":
-    phrases = ["Wake up Riley!!!!","It's time to wake up it's time to wake up","HEEEEYYY WAKE UP","RILEY RILEY RILEY WAKE UP","1 2 3 4 5 6 7 8 9 it is time to wake up","Riley more alarms are to come UNLESS you get up","OH WHEN SHALL I SEE JESUS you wanna not hear this again? Wake up","I'm so tired of telling you to wake up just wake up","A friend of the devil is somehow who doesn't wake up","Babe babe bae wake up"]
-elif timeofday == "Morning":
-    phrases = ["Your morning alarm is going off!!!!! I suggest you answer it!","This is your slightly later than morning alarm but still in the morning area!!!!","Good morning but like in a different way!!!!","It's time to cancel this alarm as it's going off but not in the way you wanted!!!","HELLLO TIME TO CONTINUE IN YOUR DAY"]
-elif timeofday == "Day":
-    phrases = ["You are usually at school like what why are you using this?","BEEEP BEEP BEEP is what a normal alarm says but I do not as I'm #NOTNORMAL","Hey user this is a really good alarm clock I wonder if their is a reason for that HMMMMMMMMMMM","OHH it's time for the ALARM GAME the goal of this game is to have your alarm go off, YOU WON!"]
-elif timeofday == "Noon":
-    phrases = ["Happy Noon!","It is now noon! Wake up!"]
-elif timeofday == "Afternoon":
-    phrases = ["It's the afternoon!! When you have homemade snacks and nice delicious foods and your alarm goes off","Afternoon time!","ALARM ALARM ALARM IT IS IN THE AFTERNOON","Hey buddy your alarm is going off","Hey!!!! Do the thing!"]
-elif timeofday == "Night":
-    phrases = ["Goodnight! But like in a different way goodnight!","Hey it's the nighttime! AND your alarm is going off!! SOOO weird!!!!!!"]
-if timeofday == "Noon":
-    soundsorno = input("Hey I saw that this is going off at noon so I wanted to know if you want to play the city sounds? Y/N ")
-    timeofday = "Bedtime"
-else:
-    soundsorno = ""
-alarmsystem(firsthour,firstminute)
+phrases = ["Wake up Riley!!!!","It's time to wake up it's time to wake up","HEEEEYYY WAKE UP","RILEY RILEY RILEY WAKE UP","1 2 3 4 5 6 7 8 9 it is time to wake up","Riley more alarms are to come UNLESS you get up","OH WHEN SHALL I SEE JESUS you wanna not hear this again? Wake up","I'm so tired of telling you to wake up just wake up","A friend of the devil is somehow who doesn't wake up","Babe babe bae wake up"]
+
+
+
+
+
+
 while 1 == 1:
-    nexttime()
+    Currenttime = time.ctime()
+    Hours1 = int(Currenttime[11:13])
+    Minutes1 = int(Currenttime[14:16])
+    Seconds = int(Currenttime[17:19])
+    dayofweek = Currenttime[0:3]
+    pressedstop = False
+    while Hours1 != 22:
+        Currenttime = time.ctime()
+        Hours1 = int(Currenttime[11:13])
+        Minutes1 = int(Currenttime[14:16])
+        Seconds = int(Currenttime[17:19])
+        dayofweek = Currenttime[0:3]
+        print("The alarm is not going off yet")
+        time.sleep(1)
+        os.system(clearorcls)
+    else:
+        if dayofweek == "sun" or dayofweek == "Sun" or dayofweek == "sat" or dayofweek == "Sat":
+            firsthour = 9
+            firstminute = 0
+            hoursandminutes = "9:00"
+        else:
+            firsthour = 5
+            firstminute = 0
+            hoursandminutes = "5:00"
+    alarmsystem(firsthour,firstminute)
+    if pressedstop != True:
+        nexttime()
