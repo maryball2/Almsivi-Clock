@@ -294,9 +294,9 @@ if firsthour >= 4 and firsthour <= 11:
 elif firsthour == 12:
     timeofday = "Noon"
 elif firsthour >= 13 and firsthour <= 17:
-    timeofday == "Afternoon"
+    timeofday = "Afternoon"
 elif firsthour >= 18 and firsthour <= 3:
-    timeofday == "Night"
+    timeofday = "Night"
 #The phrases that go off during the alarm? Set here
 if timeofday == "Bedtime":
     phrases = ["Wake up Riley!!!!","It's time to wake up it's time to wake up","HEEEEYYY WAKE UP","RILEY RILEY RILEY WAKE UP","1 2 3 4 5 6 7 8 9 it is time to wake up","Riley more alarms are to come UNLESS you get up","OH WHEN SHALL I SEE JESUS you wanna not hear this again? Wake up","I'm so tired of telling you to wake up just wake up","A friend of the devil is somehow who doesn't wake up","Babe babe bae wake up"]
