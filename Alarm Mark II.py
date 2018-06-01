@@ -199,17 +199,23 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     hoursinbetween = 0
     hourstoaddtoo = Hours1
     minutesinbetween = 0
-    while hours4 != Hours1:
-        hours4 += 1
+    Currenttime = time.ctime()
+    Hours1 = int(Currenttime[11:13])
+    Minutes1 = int(Currenttime[14:16])
+    Seconds = int(Currenttime[17:19])
+    hoursinbetween = 0
+    Hours1redone = Hours1
+    Minutes1redone = Minutes1
+    while Hours1redone != Hours2:
+        Hours1redone += 1
         hoursinbetween += 1
-        if hours4 == 24:
-            hour4 = 0
+        if Hours1redone == 24:
+            Hours1redone = 0
     minutesinbetween = 60 - Minutes1
+    if Hours1 == Hours2 and Minutes2 < Minutes1:
+        hoursinbetween = 24
     if minutesinbetween != 0:
         hoursinbetween -= 1
-    secondsinbetween = 60 - Seconds
-    if secondsinbetween != 0:
-        minutesinbetween -= 1
     if hoursinbetween > 1 or hoursinbetween < 1:
         hoursinbetweenmodifier = "hours"
     else:
