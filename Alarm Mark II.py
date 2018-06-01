@@ -24,6 +24,7 @@ global days
 global years
 global decades
 global pressedstop
+global endorno
 
 
 
@@ -32,7 +33,7 @@ global pressedstop
 
 
 
-
+endorno = ""
 dir_path = os.path.dirname(os.path.realpath(__file__))
 optionalsongs = (glob.glob(dir_path + "/Songs/*.wav*"))
 '''
@@ -183,6 +184,8 @@ def gettime(): #This gets the current time but I put this in so late I never use
 
 def alarmsystem(Hours2, Minutes2): #Main alarm loop
     global pressedstop
+    global endorno
+    endorno = ""
     seconds = 0
     minutes = 0
     hours = 0
@@ -400,7 +403,7 @@ while 1 == 1:
     Seconds = int(Currenttime[17:19])
     dayofweek = Currenttime[0:3]
     pressedstop = False
-    while Hours1 != 22:
+    while Hours1 != 7:
         Currenttime = time.ctime()
         Hours1 = int(Currenttime[11:13])
         Minutes1 = int(Currenttime[14:16])
@@ -419,5 +422,5 @@ while 1 == 1:
             firstminute = 0
             hoursandminutes = "5:00"
     alarmsystem(firsthour,firstminute)
-    if pressedstop != True:
+    while endorno !="stop":
         nexttime()
