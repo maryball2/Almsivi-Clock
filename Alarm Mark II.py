@@ -3,6 +3,10 @@ Title: Alarm Mark II
 Author: Riley Carpenter
 TODO: have the volume get louder when it goes off and quieter afterwards, if possible have it both run and end redshift when it is nightime, large text for the alarm section would be nice and also make it easier to read in the morning
 '''
+
+
+
+
 from pygame import mixer
 import time
 import os
@@ -18,6 +22,11 @@ global hours
 global days
 global years
 global decades
+
+
+
+
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 optionalsongs = (glob.glob(dir_path + "/Songs/*.wav*"))
 '''
@@ -31,11 +40,24 @@ if (os.path.exists(dir_path +"/Backgroundsounds")) == False:
     os.makedirs(dir_path + "/Backgroundsounds")
 if (os.path.exists(dir_path +"/Songs")) == False:
     os.makedirs(dir_path + "/Songs")
+
+
+
+
+
+
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #VOLUME CONTROL AREA
 
 #VOLUME CONTROL AREA
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+
+
+
 Hours3 = 5
 Minutes3 = 5
 endorno = ""
@@ -54,6 +76,12 @@ days = 0
 years = 0
 decades = 0
 Minutes2mod = 0
+
+
+
+
+
+
 class color: #This is for bold apparently??? IDK I found it on stack overflow
    PURPLE = '\033[95m'
    CYAN = '\033[96m'
@@ -65,6 +93,13 @@ class color: #This is for bold apparently??? IDK I found it on stack overflow
    BOLD = '\033[1m'
    UNDERLINE = '\033[4m'
    END = '\033[0m'
+
+
+
+
+
+
+
 #This is where I make the clearscreen function universal for all systems
 global clearorcls
 if sys.platform == "linux" or sys.platform == "posix":
@@ -72,15 +107,38 @@ if sys.platform == "linux" or sys.platform == "posix":
 else:
     clearorcls = "cls"
 
+
+
+
+
+
+
 def playsound(soundfile): #This is how you play the music
     mixer.init()
     mixer.music.load(soundfile)
     mixer.music.play(-1)
+
+
+
+
+
+
+
+
 def gettime(): #This gets the current time but I put this in so late I never used it lol
     Currenttime = time.ctime()
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
     Seconds = int(Currenttime[17:19])
+
+
+
+
+
+
+
+
+
 def alarmsystem(Hours2, Minutes2): #Main alarm loop
     seconds = 0
     minutes = 0
@@ -94,21 +152,19 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
     Seconds = int(Currenttime[17:19])
-    hours4 = Hours1
     hoursinbetween = 0
-    hourstoaddtoo = Hours1
-    minutesinbetween = 0
-    while hours4 != Hours1:
-        hours4 += 1
+    Hours1redone = Hours1
+    Minutes1redone = Minutes1
+    while Hours1redone != Hours2:
+        Hours1redone += 1
         hoursinbetween += 1
-        if hours4 == 24:
-            hour4 = 0
+        if Hours1redone == 24:
+            Hours1redone = 0
     minutesinbetween = 60 - Minutes1
+    if Hours1 == Hours2 and Minutes2 < Minutes1:
+        hoursinbetween = 24
     if minutesinbetween != 0:
         hoursinbetween -= 1
-    secondsinbetween = 60 - Seconds
-    if secondsinbetween != 0:
-        minutesinbetween -= 1
     if hoursinbetween > 1 or hoursinbetween < 1:
         hoursinbetweenmodifier = "hours"
     else:
@@ -165,6 +221,8 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         print("")
         #This is the area that controls the stopwatch that counts how long the alarm needs to be on
         seconds += 1
+        if Seconds == 60:
+            Seconds = 0
         if hoursinbetween > 0 and 60 - Seconds != 60:
             print(hoursinbetween,hoursinbetweenmodifier,minutesinbetween,minutesinbetweenmodifier,"and",60 - Seconds,secondmodifier,"is left more or less")
         elif hoursinbetween  > 0 and 60 - Seconds == 60:
@@ -217,6 +275,16 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
                 print("Goodbye",name)
             time.sleep(1)
             sys.exit()
+
+
+
+
+
+
+
+
+
+
 def nexttime():
     secondtime = True
     fiveminutecountdown = 300
@@ -273,6 +341,14 @@ def nexttime():
                 Hours3 = Hours1
                 Minutes3 = Minutes1 + timetogo
                 alarmsystem(Hours3,Minutes3)
+
+
+
+
+
+
+
+
 secondtime = False
 os.system(clearorcls)
 hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
@@ -288,6 +364,19 @@ if len(firstandhalfsecondminute) != 2:
     firstminute = int(firstandhalfsecondminute)
 else:
     firstminute = int(firstandhalfsecondminute)
+
+
+
+
+
+
+
+
+
+
+
+
+
 #This is where I make it so it's easier to tell what the time of day is
 if firsthour >= 4 and firsthour <= 11:
     timeofday = "Bedtime"
@@ -315,6 +404,16 @@ if timeofday == "Noon":
     timeofday = "Bedtime"
 else:
     soundsorno = ""
+
+
+
+
+
+
+
+
+
+
 alarmsystem(firsthour,firstminute)
 while 1 == 1:
     nexttime()
