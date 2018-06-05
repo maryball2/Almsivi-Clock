@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 Title: Alarm Mark II
 Author: Riley Carpenter
@@ -305,6 +306,7 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
             playsound(musictoplay)
         endorno = input("Press enter to stop the music and snooze for 5 minutes or type stop ")
         if endorno == "stop":
+            mixer.music.stop()
             if getpass.getuser() == "rileyball2": #My user account, this is so I can set my own nicknames here, if you want to you can modify this
                 name2 = ["Riles","Riley Carpenter","Riley Mitchel Carpenter","Rileybug","Rileyball","Rile","Michelle","Riley Michelle Carpenter","Diane","Comrade","Conrad","my really cool nonbinary pal"] #Bunch of nickity names for me
                 name = random.choice(name2)
@@ -403,7 +405,7 @@ while 1 == 1:
     Seconds = int(Currenttime[17:19])
     dayofweek = Currenttime[0:3]
     pressedstop = False
-    while Hours1 != 7:
+    while Hours1 != 22 or Hours1 != 23 or Hours1 >= 5:
         Currenttime = time.ctime()
         Hours1 = int(Currenttime[11:13])
         Minutes1 = int(Currenttime[14:16])
@@ -413,13 +415,13 @@ while 1 == 1:
         time.sleep(1)
         os.system(clearorcls)
     else:
-        if dayofweek == "sun" or dayofweek == "Sun" or dayofweek == "sat" or dayofweek == "Sat":
+        if dayofweek == "fri" or dayofweek == "Fri" or dayofweek == "sat" or dayofweek == "Sat":
             firsthour = 9
             firstminute = 0
             hoursandminutes = "9:00"
         else:
             firsthour = 5
-            firstminute = 0
+            firstminute = 00
             hoursandminutes = "5:00"
     alarmsystem(firsthour,firstminute)
     while endorno !="stop":
