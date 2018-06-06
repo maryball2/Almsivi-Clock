@@ -412,7 +412,10 @@ while 1 == 1:
         Seconds = int(Currenttime[17:19])
         dayofweek = Currenttime[0:3]
         print("The alarm is not going off yet")
-        print("It is currently",str(Hours1) + ":" + (str(Minutes1)) + ":" + str(Seconds))
+        if len(str(Hours1)) == 2:
+            print("It is currently",str(Hours1) + ":" + "0" + (str(Minutes1)) + ":" + str(Seconds))
+        else:
+            print("It is currently",str(Hours1) + ":" + (str(Minutes1)) + ":" + str(Seconds))
         time.sleep(1)
         os.system(clearorcls)
     else:
