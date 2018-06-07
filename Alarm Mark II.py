@@ -404,20 +404,17 @@ while 1 == 1:
     Minutes1 = int(Currenttime[14:16])
     Seconds = int(Currenttime[17:19])
     dayofweek = Currenttime[0:3]
+    currentmonth = Currenttime[4:7]
+    currentday = Currenttime[8:10]
     pressedstop = False
-    while Hours1 != 22 or Hours1 != 23 or Hours1 >= 5:
-        Currenttime = time.ctime()
-        Hours1 = int(Currenttime[11:13])
-        Minutes1 = int(Currenttime[14:16])
-        Seconds = int(Currenttime[17:19])
-        dayofweek = Currenttime[0:3]
-        print("The alarm is not going off yet")
-        if len(str(Hours1)) == 2:
-            print("It is currently",str(Hours1) + ":" + "0" + (str(Minutes1)) + ":" + str(Seconds))
-        else:
-            print("It is currently",str(Hours1) + ":" + (str(Minutes1)) + ":" + str(Seconds))
-        time.sleep(1)
-        os.system(clearorcls)
+    if currentmonth == "Aug" and currentmonth == "Jul":
+        firsthour = 9
+        firstminute = 0
+        hoursandminutes = "9:00"
+    elif currentmonth == "Jul" and currentday >= "14":
+        firsthour = 9
+        firstminute = 0
+        hoursandminutes = "9:00"
     else:
         if dayofweek == "fri" or dayofweek == "Fri" or dayofweek == "sat" or dayofweek == "Sat":
             firsthour = 9
@@ -427,6 +424,18 @@ while 1 == 1:
             firsthour = 5
             firstminute = 00
             hoursandminutes = "5:00"
-    alarmsystem(firsthour,firstminute)
+    while Hours1 != 22 and Hours1 != 23:
+        Currenttime = time.ctime()
+        Hours1 = int(Currenttime[11:13])
+        Minutes1 = (Currenttime[14:16])
+        Seconds = (Currenttime[17:19])
+        dayofweek = Currenttime[0:3]
+        print("The alarm is not going off yet")
+        print("The alarm will go off at",hoursandminutes)
+        print("It is currently",str(Hours1) + ":" + (str(Minutes1)) + ":" + str(Seconds))
+        time.sleep(1)
+        os.system(clearorcls)
+    else:
+        alarmsystem(firsthour,firstminute)
     while endorno !="stop":
         nexttime()
