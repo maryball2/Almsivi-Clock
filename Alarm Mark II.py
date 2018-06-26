@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 '''
 Title: Alarm Mark II
 Author: Riley Carpenter
@@ -140,6 +141,7 @@ def gettime(): #This gets the current time but I put this in so late I never use
 
 
 def alarmsystem(Hours2, Minutes2): #Main alarm loop
+    global message
     seconds = 0
     minutes = 0
     hours = 0
@@ -148,6 +150,9 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     decades = 0
     global soundisplaying
     global Minutes2mod
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    optionalsongs = (glob.glob(dir_path + "/Songs/*.wav*"))
+    background = (glob.glob(dir_path + "/Backgroundsounds/*.wav"))
     Currenttime = time.ctime()
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
@@ -249,12 +254,16 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         os.system(clearorcls)
         if soundisplaying == True:
             mixer.music.stop()
-        print(random.choice(phrases))
+        if message == "":
+            print(random.choice(phrases))
+        else:
+            print(message)
         if optionalsongs != []:
             soundisplaying = True
             musictoplay = random.choice(optionalsongs)
             playsound(musictoplay)
-        endorno = input("Press enter to stop the music and snooze for 5 minutes or type stop ")
+        print("Type stop to end the alarm or press enter to snooze for 5 minutes")
+        endorno = input("")
         if endorno == "stop":
             if getpass.getuser() == "rileyball2": #My user account, this is so I can set my own nicknames here, if you want to you can modify this
                 name2 = ["Riles","Riley Carpenter","Riley Mitchel Carpenter","Rileybug","Rileyball","Rile","Michelle","Riley Michelle Carpenter","Diane","Comrade","Conrad","my really cool nonbinary pal"] #Bunch of nickity names for me
@@ -348,7 +357,7 @@ def nexttime():
 
 
 
-
+#Where the times are set
 secondtime = False
 os.system(clearorcls)
 hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
@@ -364,6 +373,8 @@ if len(firstandhalfsecondminute) != 2:
     firstminute = int(firstandhalfsecondminute)
 else:
     firstminute = int(firstandhalfsecondminute)
+print("Type a custom message here or press enter to skip")
+message = input("Enter message or press enter ")
 
 
 
@@ -386,6 +397,8 @@ elif firsthour >= 13 and firsthour <= 17:
     timeofday = "Afternoon"
 elif firsthour >= 18 and firsthour <= 3:
     timeofday = "Night"
+else:
+    timeofday = "Bedtime"
 #The phrases that go off during the alarm? Set here
 if timeofday == "Bedtime":
     phrases = ["Wake up Riley!!!!","It's time to wake up it's time to wake up","HEEEEYYY WAKE UP","RILEY RILEY RILEY WAKE UP","1 2 3 4 5 6 7 8 9 it is time to wake up","Riley more alarms are to come UNLESS you get up","OH WHEN SHALL I SEE JESUS you wanna not hear this again? Wake up","I'm so tired of telling you to wake up just wake up","A friend of the devil is somehow who doesn't wake up","Babe babe bae wake up"]
