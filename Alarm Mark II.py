@@ -450,8 +450,19 @@ while 1 == 1:
             firstminute = int(firstandhalfsecondminute)
         else:
             firstminute = int(firstandhalfsecondminute)
-        alarmsystem(firsthour,firstminute)
-        os.system(clearorcls)
+        while Hours1 != 22 and Hours1 != 23:
+            Currenttime = time.ctime()
+            Hours1 = int(Currenttime[11:13])
+            Minutes1 = (Currenttime[14:16])
+            Seconds = (Currenttime[17:19])
+            dayofweek = Currenttime[0:3]
+            print("The alarm is not going off yet")
+            print("The alarm will go off at",hoursandminutes)
+            print("It is currently",str(Hours1) + ":" + (str(Minutes1)) + ":" + str(Seconds))
+            time.sleep(1)
+            os.system(clearorcls)
+        else:
+            alarmsystem(firsthour,firstminute)
     elif mainmenu == "2":
         os.system(clearorcls)
         print("Sunday = " + sunday)
