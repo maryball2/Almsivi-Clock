@@ -26,7 +26,8 @@ global years
 global decades
 global pressedstop
 global endorno
-
+global firsthour
+global firstminute
 
 
 
@@ -186,6 +187,9 @@ def gettime(): #This gets the current time but I put this in so late I never use
 def alarmsystem(Hours2, Minutes2): #Main alarm loop
     global pressedstop
     global endorno
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    optionalsongs = (glob.glob(dir_path + "/Songs/*.wav*"))
+    background = (glob.glob(dir_path + "/Backgroundsounds/*.wav"))
     endorno = ""
     seconds = 0
     minutes = 0
@@ -390,52 +394,117 @@ os.system(clearorcls)
 
 
 
+def gethoursandminutes():
+    global firsthour
+    global firstminute
+    if hoursandminutes[1] != ":":
+        firsthour = int(hoursandminutes[0:2])
+    else:
+        firsthour = int(hoursandminutes[0])
+    if hoursandminutes[1] != ":":
+        firstandhalfsecondminute = (hoursandminutes[3:5])
+    else:
+        firstandhalfsecondminute = (hoursandminutes[2:4])
+    if len(firstandhalfsecondminute) != 2:
+        firstminute = int(firstandhalfsecondminute)
+    else:
+        firstminute = int(firstandhalfsecondminute)
+
+
+
+
+
+
 #The phrases that go off during the alarm? Set here
 phrases = ["Wake up Riley!!!!","It's time to wake up it's time to wake up","HEEEEYYY WAKE UP","RILEY RILEY RILEY WAKE UP","1 2 3 4 5 6 7 8 9 it is time to wake up","Riley more alarms are to come UNLESS you get up","OH WHEN SHALL I SEE JESUS you wanna not hear this again? Wake up","I'm so tired of telling you to wake up just wake up","A friend of the devil is somehow who doesn't wake up","Babe babe bae wake up"]
 
-
-
-
+sunday = "9:00"
+monday = "9:00"
+tuesday = "9:00"
+wednesday = "9:00"
+thursday = "9:00"
+friday = "9:00"
+saturday = "9:00"
 
 
 while 1 == 1:
-    Currenttime = time.ctime()
-    Hours1 = int(Currenttime[11:13])
-    Minutes1 = int(Currenttime[14:16])
-    Seconds = int(Currenttime[17:19])
-    dayofweek = Currenttime[0:3]
-    currentmonth = Currenttime[4:7]
-    currentday = Currenttime[8:10]
-    pressedstop = False
-    if currentmonth == "Aug" and currentmonth == "Jul":
-        firsthour = 9
-        firstminute = 0
-        hoursandminutes = "9:00"
-    elif currentmonth == "Jul" and currentday >= "14":
-        firsthour = 9
-        firstminute = 0
-        hoursandminutes = "9:00"
-    else:
-        if dayofweek == "fri" or dayofweek == "Fri" or dayofweek == "sat" or dayofweek == "Sat":
-            firsthour = 9
-            firstminute = 0
-            hoursandminutes = "9:00"
+    os.system(clearorcls)
+    print("""
+        Welcome to the Perpetual Clock program
+            1. Start Normal Process
+            2. Check Time That Alarm Goes Off
+            3. Set One Day Only Time
+        """)
+    mainmenu = input("What number? ")
+    if mainmenu == "3":
+        hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
+        if hoursandminutes[1] != ":":
+            firsthour = int(hoursandminutes[0:2])
         else:
-            firsthour = 5
-            firstminute = 00
-            hoursandminutes = "5:00"
-    while Hours1 != 22 and Hours1 != 23:
-        Currenttime = time.ctime()
-        Hours1 = int(Currenttime[11:13])
-        Minutes1 = (Currenttime[14:16])
-        Seconds = (Currenttime[17:19])
-        dayofweek = Currenttime[0:3]
-        print("The alarm is not going off yet")
-        print("The alarm will go off at",hoursandminutes)
-        print("It is currently",str(Hours1) + ":" + (str(Minutes1)) + ":" + str(Seconds))
-        time.sleep(1)
-        os.system(clearorcls)
-    else:
+            firsthour = int(hoursandminutes[0])
+        if hoursandminutes[1] != ":":
+            firstandhalfsecondminute = (hoursandminutes[3:5])
+        else:
+            firstandhalfsecondminute = (hoursandminutes[2:4])
+        if len(firstandhalfsecondminute) != 2:
+            firstminute = int(firstandhalfsecondminute)
+        else:
+            firstminute = int(firstandhalfsecondminute)
         alarmsystem(firsthour,firstminute)
-    while endorno !="stop":
-        nexttime()
+        os.system(clearorcls)
+    elif mainmenu == "2":
+        os.system(clearorcls)
+        print("Sunday = " + sunday)
+        print("Monday =",monday)
+        print("Tuesday =",tuesday)
+        print("Wednesday =",wednesday)
+        print("Thursday =",thursday)
+        print("Friday =",friday)
+        print("Saturday =",saturday)
+        input()
+    else:
+        while 1 == 1:
+            Currenttime = time.ctime()
+            Hours1 = int(Currenttime[11:13])
+            Minutes1 = int(Currenttime[14:16])
+            Seconds = int(Currenttime[17:19])
+            dayofweek = Currenttime[0:3]
+            currentmonth = Currenttime[4:7]
+            currentday = Currenttime[8:10]
+            pressedstop = False
+            if dayofweek == "fri" or dayofweek == "Fri":
+                hoursandminutes = friday
+                gethoursandminutes()
+            elif dayofweek == "sun" or dayofweek == "Sun":
+                hoursandminutes = sunday
+                gethoursandminutes()
+            elif dayofweek == "mon" or dayofweek == "Mon":
+                hoursandminutes = monday
+                gethoursandminutes()
+            elif dayofweek == "tues" or dayofweek == "Tues" or dayofweek == "tue" or dayofweek == "Tue":
+                hoursandminutes = tuesday
+                gethoursandminutes()
+            elif dayofweek == "wed" or dayofweek == "Wed":
+                hoursandminutes = wednesday
+                gethoursandminutes()
+            elif dayofweek == "Thurs" or dayofweek == "thurs" or dayofweek == "thu" or dayofweek == "Thu":
+                hoursandminutes = thursday
+                gethoursandminutes()
+            elif dayofweek == "sat" or dayofweek == "Sat":
+                hoursandminutes = saturday
+                gethoursandminutes()
+            while Hours1 != 22 and Hours1 != 23:
+                Currenttime = time.ctime()
+                Hours1 = int(Currenttime[11:13])
+                Minutes1 = (Currenttime[14:16])
+                Seconds = (Currenttime[17:19])
+                dayofweek = Currenttime[0:3]
+                print("The alarm is not going off yet")
+                print("The alarm will go off at",hoursandminutes)
+                print("It is currently",str(Hours1) + ":" + (str(Minutes1)) + ":" + str(Seconds))
+                time.sleep(1)
+                os.system(clearorcls)
+            else:
+                alarmsystem(firsthour,firstminute)
+            while endorno !="stop":
+                nexttime()
