@@ -311,7 +311,7 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
         endorno = input("Press enter to stop the music and snooze for 5 minutes or type stop ")
         if endorno == "stop":
             mixer.music.stop()
-            if getpass.getuser() == "rileyball2": #My user account, this is so I can set my own nicknames here, if you want to you can modify this
+            if getpass.getuser() == "rileyball": #My user account, this is so I can set my own nicknames here, if you want to you can modify this
                 name2 = ["Riles","Riley Carpenter","Riley Mitchel Carpenter","Rileybug","Rileyball","Rile","Michelle","Riley Michelle Carpenter","Diane","Comrade","Conrad","my really cool nonbinary pal"] #Bunch of nickity names for me
                 name = random.choice(name2)
             else:
@@ -418,13 +418,14 @@ def gethoursandminutes():
 #The phrases that go off during the alarm? Set here
 phrases = ["Wake up Riley!!!!","It's time to wake up it's time to wake up","HEEEEYYY WAKE UP","RILEY RILEY RILEY WAKE UP","1 2 3 4 5 6 7 8 9 it is time to wake up","Riley more alarms are to come UNLESS you get up","OH WHEN SHALL I SEE JESUS you wanna not hear this again? Wake up","I'm so tired of telling you to wake up just wake up","A friend of the devil is somehow who doesn't wake up","Babe babe bae wake up"]
 
-sunday = "9:00"
-monday = "9:00"
-tuesday = "9:00"
-wednesday = "9:00"
-thursday = "9:00"
+sunday = "5:00"
+monday = "5:00"
+tuesday = "5:00"
+wednesday = "5:00"
+thursday = "5:00"
 friday = "9:00"
 saturday = "9:00"
+
 
 
 while 1 == 1:
@@ -437,31 +438,37 @@ while 1 == 1:
         """)
     mainmenu = input("What number? ")
     if mainmenu == "3":
-        hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
-        if hoursandminutes[1] != ":":
-            firsthour = int(hoursandminutes[0:2])
-        else:
-            firsthour = int(hoursandminutes[0])
-        if hoursandminutes[1] != ":":
-            firstandhalfsecondminute = (hoursandminutes[3:5])
-        else:
-            firstandhalfsecondminute = (hoursandminutes[2:4])
-        if len(firstandhalfsecondminute) != 2:
-            firstminute = int(firstandhalfsecondminute)
-        else:
-            firstminute = int(firstandhalfsecondminute)
-        while Hours1 != 22 and Hours1 != 23:
-            Currenttime = time.ctime()
-            Hours1 = int(Currenttime[11:13])
-            Minutes1 = (Currenttime[14:16])
-            Seconds = (Currenttime[17:19])
-            dayofweek = Currenttime[0:3]
-            print("The alarm is not going off yet")
-            print("The alarm will go off at",hoursandminutes)
-            print("It is currently",str(Hours1) + ":" + (str(Minutes1)) + ":" + str(Seconds))
-            time.sleep(1)
-            os.system(clearorcls)
-        else:
+        hoursandminutes = ""
+        while hoursandminutes == "":
+            hoursandminutes = ""
+            hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
+            if len(hoursandminutes) < 4 or len(hoursandminutes) > 5:
+                print("ERROR: Type like this 4:20")
+                hoursandminutes = input("Insert time here: ")
+            if hoursandminutes[1] != ":":
+                firsthour = int(hoursandminutes[0:2])
+            else:
+                firsthour = int(hoursandminutes[0])
+            if hoursandminutes[1] != ":":
+                firstandhalfsecondminute = (hoursandminutes[3:5])
+            else:
+                firstandhalfsecondminute = (hoursandminutes[2:4])
+            if len(firstandhalfsecondminute) != 2:
+                firstminute = int(firstandhalfsecondminute)
+            else:
+                firstminute = int(firstandhalfsecondminute)
+            while Hours1 != 22 and Hours1 != 23:
+                Currenttime = time.ctime()
+                Hours1 = int(Currenttime[11:13])
+                Minutes1 = (Currenttime[14:16])
+                Seconds = (Currenttime[17:19])
+                dayofweek = Currenttime[0:3]
+                print("The alarm is not going off yet")
+                print("The alarm will go off at",hoursandminutes)
+                print("It is currently",str(Hours1) + ":" + (str(Minutes1)) + ":" + str(Seconds))
+                time.sleep(1)
+                os.system(clearorcls)
+            else:
             alarmsystem(firsthour,firstminute)
     elif mainmenu == "2":
         os.system(clearorcls)
