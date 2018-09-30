@@ -360,19 +360,25 @@ def nexttime():
 #Where the times are set
 secondtime = False
 os.system(clearorcls)
-hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
-if hoursandminutes[1] != ":":
-    firsthour = int(hoursandminutes[0:2])
-else:
-    firsthour = int(hoursandminutes[0])
-if hoursandminutes[1] != ":":
-    firstandhalfsecondminute = (hoursandminutes[3:5])
-else:
-    firstandhalfsecondminute = (hoursandminutes[2:4])
-if len(firstandhalfsecondminute) != 2:
-    firstminute = int(firstandhalfsecondminute)
-else:
-    firstminute = int(firstandhalfsecondminute)
+hoursandminutes = ""
+while hoursandminutes == "":
+    hoursandminutes = ""
+    hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
+    if len(hoursandminutes) < 4 or len(hoursandminutes) > 5:
+        print("ERROR: Type like this 4:20")
+        hoursandminutes = input("Insert time here: ")
+    if hoursandminutes[1] != ":":
+        firsthour = int(hoursandminutes[0:2])
+    else:
+        firsthour = int(hoursandminutes[0])
+    if hoursandminutes[1] != ":":
+        firstandhalfsecondminute = (hoursandminutes[3:5])
+    else:
+        firstandhalfsecondminute = (hoursandminutes[2:4])
+    if len(firstandhalfsecondminute) != 2:
+        firstminute = int(firstandhalfsecondminute)
+    else:
+        firstminute = int(firstandhalfsecondminute)
 print("Type a custom message here or press enter to skip")
 message = input("Enter message or press enter ")
 
