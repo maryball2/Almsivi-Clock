@@ -469,7 +469,7 @@ while 1 == 1:
                 time.sleep(1)
                 os.system(clearorcls)
             else:
-            alarmsystem(firsthour,firstminute)
+                alarmsystem(firsthour,firstminute)
     elif mainmenu == "2":
         os.system(clearorcls)
         print("Sunday = " + sunday)
