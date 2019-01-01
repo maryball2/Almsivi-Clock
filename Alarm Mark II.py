@@ -104,7 +104,7 @@ days = 0
 years = 0
 decades = 0
 Minutes2mod = 0
-
+amountsnoozed = 0
 
 
 
@@ -132,6 +132,12 @@ class color: #This is for bold apparently??? IDK I found it on stack overflow
 
 
 
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 
 
@@ -146,7 +152,29 @@ else:
 
 
 
+if (os.path.isfile("settingsperpetual.ini")) == False:
+    file = open("settingsperpetual.ini","w")
+    file.write("backgroundsound = on" + os.linesep)
+    file.write("stopsnooze = no" + os.linesep)
+    file.write("sunday = 5:00" + os.linesep)
+    file.write("monday = 5:00" + os.linesep)
+    file.write("tuesday = 5:00" + os.linesep)
+    file.write("wednesday = 5:00" + os.linesep)
+    file.write("thursday = 5:00" + os.linesep)
+    file.write("friday = 9:00" + os.linesep)
+    file.write("saturday = 9:00" + os.linesep)  
+    file.close()
+file = open("settingsperpetual.ini","r")
+settings = file.readlines()
+file.close()
 
+snoozeend = 999
+#Activates settings areas
+settings1 = str(settings[1])
+if RepresentsInt(settings1[13:len(settings1)]) == True:
+    snoozeend = int(settings1[13:len(settings1)])
+else:
+    snoozeend = "disable"
 
 
 
@@ -199,6 +227,7 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     decades = 0
     global soundisplaying
     global Minutes2mod
+    global fiveminutecountdown
     Currenttime = time.ctime()
     Hours1 = int(Currenttime[11:13])
     Minutes1 = int(Currenttime[14:16])
@@ -235,7 +264,7 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     if soundisplaying == True: #Checks if sound is playing because if it is and you stop sound it will break
         mixer.music.stop()
         soundisplaying = False
-    if background != []: #Insures that the background sound won't play if it doesn't exist
+    if background != [] and settings[0] == "backgroundsound = on": #Insures that the background sound won't play if it doesn't exist or if it's turned off in settings
         soundisplaying = True
         playsound(random.choice(background))
     while Hours1 != Hours2 or Minutes1 != Minutes2:
@@ -418,13 +447,13 @@ def gethoursandminutes():
 #The phrases that go off during the alarm? Set here
 phrases = ["Wake up Riley!!!!","It's time to wake up it's time to wake up","HEEEEYYY WAKE UP","RILEY RILEY RILEY WAKE UP","1 2 3 4 5 6 7 8 9 it is time to wake up","Riley more alarms are to come UNLESS you get up","OH WHEN SHALL I SEE JESUS you wanna not hear this again? Wake up","I'm so tired of telling you to wake up just wake up","A friend of the devil is somehow who doesn't wake up","Babe babe bae wake up"]
 
-sunday = "5:00"
-monday = "5:00"
-tuesday = "5:00"
-wednesday = "5:00"
-thursday = "5:00"
-friday = "9:00"
-saturday = "9:00"
+sunday = str(settings[2])[9:len(str(settings[2]))]
+monday = str(settings[3])[9:len(str(settings[3]))]
+tuesday = str(settings[4])[10:len(str(settings[4]))]
+wednesday = str(settings[5])[12:len(str(settings[5]))]
+thursday = str(settings[6])[11:len(str(settings[6]))]
+friday = str(settings[7])[7:len(str(settings[7]))]
+saturday = str(settings[8])[11:len(str(settings[8]))]
 
 
 
@@ -525,4 +554,17 @@ while 1 == 1:
             else:
                 alarmsystem(firsthour,firstminute)
             while endorno !="stop":
-                nexttime()
+                if amountsnoozed == snoozeend:
+                    Currenttime = time.ctime()
+                    Hours1 = int(Currenttime[11:13])
+                    Minutes1 = int(Currenttime[14:16])
+                    Seconds = int(Currenttime[17:19])
+                    mixer.music.stop()
+                    os.system(clearorcls)
+                    print("NO MORE SNOOZING")
+                    time.sleep(2)
+                    mixer.music.stop()
+                    alarmsystem(Hours1,Minutes1)
+                elif amountsnoozed != snoozeend:
+                    amountsnoozed += 1
+                    nexttime()
