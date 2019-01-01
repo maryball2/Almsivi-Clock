@@ -23,10 +23,17 @@ global hours
 global days
 global years
 global decades
+global settings
+global amountsnoozed
 
+amountsnoozed = 0
 
-
-
+def RepresentsInt(s):
+    try: 
+        int(s)
+        return True
+    except ValueError:
+        return False
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 optionalsongs = (glob.glob(dir_path + "/Songs/*.wav*"))
@@ -41,6 +48,24 @@ if (os.path.exists(dir_path +"/Backgroundsounds")) == False:
     os.makedirs(dir_path + "/Backgroundsounds")
 if (os.path.exists(dir_path +"/Songs")) == False:
     os.makedirs(dir_path + "/Songs")
+
+#Creates settings.ini with default settings
+if (os.path.isfile("settings.ini")) == False:
+    file = open("settings.ini","w")
+    file.write("backgroundsound = on" + os.linesep)
+    file.write("stopsnooze = no" + os.linesep)
+    file.close()
+file = open("settings.ini","r")
+settings = file.readlines()
+file.close()
+
+snoozeend = 999
+#Activates settings areas
+settings1 = str(settings[1])
+if RepresentsInt(settings1[13:len(settings1)]) == True:
+    snoozeend = int(settings1[13:len(settings1)])
+else:
+    snoozeend = "disable"
 
 
 
@@ -142,6 +167,8 @@ def gettime(): #This gets the current time but I put this in so late I never use
 
 def alarmsystem(Hours2, Minutes2): #Main alarm loop
     global message
+    global fiveminutecountdown
+    global amountsnoozed
     seconds = 0
     minutes = 0
     hours = 0
@@ -181,10 +208,10 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     if soundisplaying == True: #Checks if sound is playing because if it is and you stop sound it will break
         mixer.music.stop()
         soundisplaying = False
-    if timeofday == "Bedtime" and background != []: #Insures that the background sound won't play if it doesn't exist
+    if timeofday == "Bedtime" and background != [] and settings[0] == "backgroundsound = on": #Insures that the background sound won't play if it doesn't exist
         soundisplaying = True
         playsound(random.choice(background))
-    elif soundsorno == "Y" or soundsorno == "Yes" or soundsorno == "y" or soundsorno == "yes" and background != []:
+    elif soundsorno == "Y" or soundsorno == "Yes" or soundsorno == "y" or soundsorno == "yes" and background != [] and settings[0] == "backgroundsound = on/n":
         playsound(random.choice(background))
         soundisplaying = True
     while Hours1 != Hours2 or Minutes1 != Minutes2:
@@ -360,6 +387,8 @@ def nexttime():
 #Where the times are set
 secondtime = False
 os.system(clearorcls)
+print(snoozeend)
+print(amountsnoozed)
 hoursandminutes = ""
 while hoursandminutes == "":
     hoursandminutes = ""
@@ -432,7 +461,19 @@ else:
 
 
 
-
 alarmsystem(firsthour,firstminute)
 while 1 == 1:
-    nexttime()
+    if amountsnoozed == snoozeend:
+        Currenttime = time.ctime()
+        Hours1 = int(Currenttime[11:13])
+        Minutes1 = int(Currenttime[14:16])
+        Seconds = int(Currenttime[17:19])
+        mixer.music.stop()
+        os.system(clearorcls)
+        print("NO MORE SNOOZING")
+        time.sleep(2)
+        mixer.music.stop()
+        alarmsystem(Hours1,Minutes1)
+    elif amountsnoozed != snoozeend:
+        amountsnoozed += 1
+        nexttime()
