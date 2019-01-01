@@ -387,8 +387,6 @@ def nexttime():
 #Where the times are set
 secondtime = False
 os.system(clearorcls)
-print(snoozeend)
-print(amountsnoozed)
 hoursandminutes = ""
 while hoursandminutes == "":
     hoursandminutes = ""
