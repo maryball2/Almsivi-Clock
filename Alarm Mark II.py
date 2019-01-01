@@ -61,7 +61,14 @@ file.close()
 
 snoozeend = 999
 #Activates settings areas
-settings1 = str(settings[1])
+if sys.platform == "linux" or sys.platform == "posix":
+    settings0 = str(settings[0])
+else:
+    settings0 = str(settings[1])
+if sys.platform == "linux" or sys.platform == "posix":
+    settings1 = str(settings[1])
+else:
+    settings1 = str(settings[2])
 if RepresentsInt(settings1[13:len(settings1)]) == True:
     snoozeend = int(settings1[13:len(settings1)])
 else:
@@ -208,10 +215,10 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
     if soundisplaying == True: #Checks if sound is playing because if it is and you stop sound it will break
         mixer.music.stop()
         soundisplaying = False
-    if timeofday == "Bedtime" and background != [] and settings[0] == "backgroundsound = on": #Insures that the background sound won't play if it doesn't exist
+    if timeofday == "Bedtime" and background != [] and settings0 == "backgroundsound = on": #Insures that the background sound won't play if it doesn't exist
         soundisplaying = True
         playsound(random.choice(background))
-    elif soundsorno == "Y" or soundsorno == "Yes" or soundsorno == "y" or soundsorno == "yes" and background != [] and settings[0] == "backgroundsound = on/n":
+    elif soundsorno == "Y" or soundsorno == "Yes" or soundsorno == "y" or soundsorno == "yes" and background != [] and settings0 == "backgroundsound = on/n":
         playsound(random.choice(background))
         soundisplaying = True
     while Hours1 != Hours2 or Minutes1 != Minutes2:
