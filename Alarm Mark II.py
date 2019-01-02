@@ -454,15 +454,22 @@ def gethoursandminutes():
 #The phrases that go off during the alarm? Set here
 phrases = ["Wake up Riley!!!!","It's time to wake up it's time to wake up","HEEEEYYY WAKE UP","RILEY RILEY RILEY WAKE UP","1 2 3 4 5 6 7 8 9 it is time to wake up","Riley more alarms are to come UNLESS you get up","OH WHEN SHALL I SEE JESUS you wanna not hear this again? Wake up","I'm so tired of telling you to wake up just wake up","A friend of the devil is somehow who doesn't wake up","Babe babe bae wake up"]
 
-sunday = str(settings[2])[9:len(str(settings[2]))]
-monday = str(settings[3])[9:len(str(settings[3]))]
-tuesday = str(settings[4])[10:len(str(settings[4]))]
-wednesday = str(settings[5])[12:len(str(settings[5]))]
-thursday = str(settings[6])[11:len(str(settings[6]))]
-friday = str(settings[7])[7:len(str(settings[7]))]
-saturday = str(settings[8])[11:len(str(settings[8]))]
-
-
+if sys.platform == "linux" or sys.platform == "posix":
+    sunday = str(settings[2])[9:len(str(settings[2]))]
+    monday = str(settings[3])[9:len(str(settings[3]))]
+    tuesday = str(settings[4])[10:len(str(settings[4]))]
+    wednesday = str(settings[5])[12:len(str(settings[5]))]
+    thursday = str(settings[6])[11:len(str(settings[6]))]
+    friday = str(settings[7])[7:len(str(settings[7]))]
+    saturday = str(settings[8])[11:len(str(settings[8]))]
+else:
+    sunday = str(settings[3])[9:len(str(settings[2]))]
+    monday = str(settings[4])[9:len(str(settings[3]))]
+    tuesday = str(settings[5])[10:len(str(settings[4]))]
+    wednesday = str(settings[6])[12:len(str(settings[5]))]
+    thursday = str(settings[7])[11:len(str(settings[6]))]
+    friday = str(settings[8])[7:len(str(settings[7]))]
+    saturday = str(settings[9])[11:len(str(settings[8]))]
 
 while 1 == 1:
     os.system(clearorcls)
