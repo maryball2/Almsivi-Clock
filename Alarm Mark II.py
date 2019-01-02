@@ -317,7 +317,7 @@ def alarmsystem(Hours2, Minutes2): #Main alarm loop
             else:
                 print("Goodbye",name)
             time.sleep(1)
-            sys.exit()
+            os.execl(sys.executable, sys.executable, *sys.argv)
 
 
 
@@ -390,31 +390,69 @@ def nexttime():
 
 
 
-
+firsthour = "Not Set"
+firstminute = "Not Set"
+mainmenu = ""
+while mainmenu != "2" or firsthour == "Not Set" or firstminute == "Not Set":
 #Where the times are set
-secondtime = False
-os.system(clearorcls)
-hoursandminutes = ""
-while hoursandminutes == "":
-    hoursandminutes = ""
-    hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
-    if len(hoursandminutes) < 4 or len(hoursandminutes) > 5:
-        print("ERROR: Type like this 4:20")
-        hoursandminutes = input("Insert time here: ")
-    if hoursandminutes[1] != ":":
-        firsthour = int(hoursandminutes[0:2])
-    else:
-        firsthour = int(hoursandminutes[0])
-    if hoursandminutes[1] != ":":
-        firstandhalfsecondminute = (hoursandminutes[3:5])
-    else:
-        firstandhalfsecondminute = (hoursandminutes[2:4])
-    if len(firstandhalfsecondminute) != 2:
-        firstminute = int(firstandhalfsecondminute)
-    else:
-        firstminute = int(firstandhalfsecondminute)
-print("Type a custom message here or press enter to skip")
-message = input("Enter message or press enter ")
+    os.system(clearorcls)
+    print("Welcome To Almsivi Clock")
+    print("")
+    print("")
+    print("1. Set Time for Alarm")
+    print("2. Activate Alarm")
+    print("3. Edit Settings")
+    print("4. About This Program")
+    print("")
+    print("")
+    mainmenu = input("What would you like to do? ")
+    
+    
+    
+    if mainmenu == "1":
+        secondtime = False
+        os.system(clearorcls)
+        hoursandminutes = ""
+        while hoursandminutes == "":
+            hoursandminutes = ""
+            hoursandminutes = input("What time do you want the alarm to go off? (type like this: 22:14) ")
+            if len(hoursandminutes) < 4 or len(hoursandminutes) > 5:
+                print("ERROR: Type like this 4:20")
+                hoursandminutes = input("Insert time here: ")
+            if hoursandminutes[1] != ":":
+                firsthour = int(hoursandminutes[0:2])
+            else:
+                firsthour = int(hoursandminutes[0])
+            if hoursandminutes[1] != ":":
+                firstandhalfsecondminute = (hoursandminutes[3:5])
+            else:
+                firstandhalfsecondminute = (hoursandminutes[2:4])
+            if len(firstandhalfsecondminute) != 2:
+                firstminute = int(firstandhalfsecondminute)
+            else:
+                firstminute = int(firstandhalfsecondminute)
+        print("Type a custom message here or press enter to skip")
+        message = input("Enter message or press enter ")
+    elif mainmenu == "2" and firsthour == "Not Set" and firstminute == "Not Set":
+        os.system(clearorcls)
+        print("You have to set the alarm!!!!!!!")
+        input("Press Enter to go back")
+    elif mainmenu == "3":
+        os.system(clearorcls)
+        print("This hasn't been created yet sorry! I'm getting right on it")
+        input("Press Enter to go back")
+    elif mainmenu == "4":
+        os.system(clearorcls)
+        print("This program was created by Riley Carpenter (rileyball on github)")
+        print("It was created because I hated having to set 500 alarms for myself on my phone") 
+        print("and doing this felt easier in the long run")
+        with open('Alarm Mark II.py') as f:
+            totalcode = sum(1 for _ in f)
+        print("In total this took " + str(totalcode) + " lines of code to make") 
+        print("so I hope you find some enjoyment out of it!")
+        input("Press Enter to go back")
+
+
 
 
 
