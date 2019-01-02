@@ -403,6 +403,7 @@ while mainmenu != "2" or firsthour == "Not Set" or firstminute == "Not Set":
     print("2. Activate Alarm")
     print("3. Edit Settings")
     print("4. About This Program")
+    print("5. Exit")
     print("")
     print("")
     mainmenu = input("What would you like to do? ")
@@ -451,6 +452,11 @@ while mainmenu != "2" or firsthour == "Not Set" or firstminute == "Not Set":
         print("In total this took " + str(totalcode) + " lines of code to make") 
         print("so I hope you find some enjoyment out of it!")
         input("Press Enter to go back")
+    elif mainmenu == "5":
+        os.system(clearorcls)
+        print("Goodbye")
+        time.sleep(2)
+        sys.exit()
 
 
 
