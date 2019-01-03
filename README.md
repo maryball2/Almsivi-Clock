@@ -1,4 +1,4 @@
-# Python Alarm Mark II
+# Almsivi Clock
 
 This alarm will pick randomly from songs and will then go off every 5 minutes It can be used by others because you can input the starting time that you would like to sleep and will then have an alarm every 5 minutes after that
 
