@@ -109,6 +109,7 @@ days = 0
 years = 0
 decades = 0
 Minutes2mod = 0
+message = ""
 
 
 
@@ -396,14 +397,16 @@ mainmenu = ""
 while mainmenu != "2" or firsthour == "Not Set" or firstminute == "Not Set":
 #Where the times are set
     os.system(clearorcls)
+    print(len(settings))
     print("Welcome To Almsivi Clock")
     print("")
     print("")
     print("1. Set Time for Alarm")
     print("2. Activate Alarm")
-    print("3. Edit Settings")
-    print("4. About This Program")
-    print("5. Exit")
+    print("3. Set Custom Message")
+    print("4. Edit Settings")
+    print("5. About This Program")
+    print("6. Exit")
     print("")
     print("")
     mainmenu = input("What would you like to do? ")
@@ -432,30 +435,94 @@ while mainmenu != "2" or firsthour == "Not Set" or firstminute == "Not Set":
                 firstminute = int(firstandhalfsecondminute)
             else:
                 firstminute = int(firstandhalfsecondminute)
-        print("Type a custom message here or press enter to skip")
-        message = input("Enter message or press enter ")
+    
+
     elif mainmenu == "2" and firsthour == "Not Set" and firstminute == "Not Set":
         os.system(clearorcls)
         print("You have to set the alarm!!!!!!!")
         input("Press Enter to go back")
+    
+    
     elif mainmenu == "3":
         os.system(clearorcls)
-        print("This hasn't been created yet sorry! I'm getting right on it")
-        input("Press Enter to go back")
+        print("Press Enter to go back")
+        print("What would you like your custom message to say? ")
+        message = input("Enter Message: ")
+
+
     elif mainmenu == "4":
+        settingsmenu = ""
+        while settingsmenu != "exit" and settingsmenu != "Exit":
+            os.system(clearorcls)
+            print("Type exit to exit")
+            print("Type apply to apply changes")
+            print("")
+            print("Your current settings are as follows: ")
+            countnum = 1
+            for i in settings:
+                print(str(countnum) + ": " + i)
+                countnum += 1
+            settingsmenu = input("Which number would you like to modify? ")
+            os.system(clearorcls)
+            if settingsmenu == "1":
+                print(settings0)
+                if settings0[18:len(settings0)] == "on":
+                    print("Would you like to toggle this off? ")
+                    toggle0 = input("Y/N ")
+                    if toggle0 == "Y" or toggle0 == "y":
+                        if sys.platform == "linux" or sys.platform == "posix":
+                            settings[0] = "backgroundsound = off"
+                        else:
+                            settings[1] = "backgroundsound = off"
+                    else:
+                        os.system(clearorcls)
+                        print("Sending you back to the settings menu then")
+                        time.sleep(3)
+                else:
+                    print("Would you like to toggle this on? ")
+                    toggle0 = input("Y/N ")
+                    if toggle0 == "Y" or toggle0 == "y":
+                        if sys.platform == "linux" or sys.platform == "posix":
+                            settings[0] = "backgroundsound = on"
+                        else:
+                            settings[1] = "backgroundsound = on"
+                    else:
+                        os.system(clearorcls)
+                        print("Sending you back to the settings menu then")
+                        time.sleep(3)
+            elif settingsmenu == "apply":
+                file = open("settings.ini","w")
+                count = 0
+                while count != len(settings):
+                    if settings[count] != "" or settings[count] != " ":
+                        file.write(settings[count] + os.linesep)
+                    count += 1
+                file.close()
+            else:
+                print("Command not recognised")
+    
+
+    elif mainmenu == "5":
         os.system(clearorcls)
         print("This program was created by Riley Carpenter (rileyball on github)")
         print("It was created because I hated having to set 500 alarms for myself on my phone") 
         print("and doing this felt easier in the long run")
-        with open('Alarm Mark II.py') as f:
+        with open('Almsivi Clock.py') as f:
             totalcode = sum(1 for _ in f)
         print("In total this took " + str(totalcode) + " lines of code to make") 
         print("so I hope you find some enjoyment out of it!")
+        print("")
+        print("")
+        print("")
+        print("")
         input("Press Enter to go back")
-    elif mainmenu == "5":
+    
+
+    elif mainmenu == "6":
         os.system(clearorcls)
         print("Goodbye")
         time.sleep(2)
+        os.system(clearorcls)
         sys.exit()
 
 
